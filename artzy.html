@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f5f5ef">
+  <meta name="theme-color" content="#101923">
   <title>Artzy — make room for wonder</title>
   <style>
     :root {
@@ -32,45 +32,79 @@
     .hidden { display: none !important; }
     .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
 
-    .welcome { min-height: 100vh; overflow: hidden; position: relative; background: var(--paper); }
-    .welcome::before { content: ""; position: absolute; width: 510px; height: 510px; right: -150px; top: 90px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #f2c77b 0 10%, #f0a783 11% 28%, #e98c78 29% 48%, #e8b9a1 49% 63%, transparent 64%); opacity: .8; filter: saturate(.84); }
-    .welcome::after { content: ""; position: absolute; width: 320px; height: 250px; right: 240px; top: 285px; border-radius: 48% 52% 55% 45%; background: #92b7a0; transform: rotate(-28deg); opacity: .76; }
-    .welcome-header { position: relative; z-index: 1; height: 84px; padding: 0 6.2vw; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e8e8df; }
+    .welcome { min-height: 100vh; overflow: hidden; position: relative; color: #f3f1e8; background: #101923; }
+    .welcome::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(1.2px 1.2px at 7% 13%, #fff2c9 99%, transparent), radial-gradient(1px 1px at 18% 38%, #9bd8cf 99%, transparent), radial-gradient(1.5px 1.5px at 30% 9%, #f2d994 99%, transparent), radial-gradient(1px 1px at 43% 25%, #e3edec 99%, transparent), radial-gradient(1.3px 1.3px at 56% 12%, #f1a28d 99%, transparent), radial-gradient(1px 1px at 71% 34%, #e3edec 99%, transparent), radial-gradient(1.4px 1.4px at 84% 16%, #f2d994 99%, transparent), radial-gradient(1px 1px at 94% 41%, #9ec4ef 99%, transparent), radial-gradient(1px 1px at 12% 64%, #efad78 99%, transparent), radial-gradient(1.4px 1.4px at 38% 57%, #fff2c9 99%, transparent), radial-gradient(1px 1px at 64% 71%, #9bd8cf 99%, transparent), radial-gradient(1.3px 1.3px at 89% 62%, #f1a28d 99%, transparent), radial-gradient(2px 2px at 24% 79%, #9ec4ef 99%, transparent), radial-gradient(1.6px 1.6px at 76% 83%, #efad78 99%, transparent); opacity: .82; }
+    .welcome::after { content: ""; position: absolute; width: min(42vw, 510px); aspect-ratio: 1; right: 5vw; top: 112px; pointer-events: none; clip-path: polygon(50% 0, 61% 36%, 99% 39%, 69% 62%, 80% 100%, 50% 77%, 20% 100%, 31% 62%, 1% 39%, 39% 36%); background: #e5c879; opacity: .055; transform: rotate(8deg); }
+    .welcome-header { position: relative; z-index: 1; height: 84px; padding: 0 6.2vw; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff20; }
     .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; letter-spacing: .2px; }
-    .brand-mark { width: 31px; height: 31px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; background: var(--green); color: white; transform: rotate(-4deg); }
-    .brand-mark .icon { width: 18px; height: 18px; }
-    .header-note { color: var(--muted); font-size: 13px; }
+    .brand-mark { width: 31px; height: 31px; display: grid; place-items: center; color: #e5c879; }
+    .brand-mark .icon { width: 27px; height: 27px; stroke-width: 1.7; }
+    .header-note { color: #b7c2c3; font-size: 13px; }
     .welcome-content { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 88px 7vw 74px; }
     .hero-copy { max-width: 580px; animation: rise .55s ease-out both; }
-    .eyebrow { color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
+    .eyebrow { color: #e5c879; font-size: 11px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
     h1, h2, h3, p { margin-top: 0; }
     h1 { margin: 18px 0 16px; font: 500 clamp(54px, 7vw, 82px)/.98 Georgia, "Times New Roman", serif; letter-spacing: 0; }
-    h1 em { color: var(--green); font-weight: 400; }
-    .hero-copy p { max-width: 410px; margin-bottom: 27px; color: #67736c; font-size: 16px; line-height: 1.7; }
-    .primary-button { border: 0; min-height: 49px; padding: 0 20px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; color: #fff; background: var(--green); font-weight: 700; cursor: pointer; transition: background .18s, transform .18s; }
-    .primary-button:hover { background: var(--green-dark); transform: translateY(-1px); }
+    h1 { color: #f3f1e8; }
+    h1 em { color: #e5c879; font-weight: 400; }
+    .hero-copy p { max-width: 410px; margin-bottom: 27px; color: #b7c2c3; font-size: 16px; line-height: 1.7; }
+    .primary-button { border: 0; min-height: 49px; padding: 0 20px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; color: #18212a; background: #e5c879; font-weight: 700; cursor: pointer; transition: background .18s, transform .18s; }
+    .primary-button:hover { background: #f0d998; transform: translateY(-1px); }
     .primary-button .icon { width: 18px; height: 18px; }
     .library { position: relative; z-index: 2; margin-top: 100px; animation: rise .65s .12s ease-out both; }
     .section-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 19px; }
-    .section-heading h2 { margin: 0; font: 500 27px/1.2 Georgia, "Times New Roman", serif; }
-    .section-heading span { color: var(--muted); font-size: 12px; }
+    .section-heading h2 { margin: 0; color: #f3f1e8; font: 500 27px/1.2 Georgia, "Times New Roman", serif; }
+    .section-heading span { color: #aab9bd; font-size: 12px; }
     .artwork-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
-    .artwork-card { min-width: 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; text-align: left; background: var(--white); cursor: pointer; transition: transform .18s, box-shadow .18s; }
-    .artwork-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px #33463812; }
-    .artwork-thumb { height: 145px; display: grid; place-items: center; overflow: hidden; background: #e9e7dc; }
-    .artwork-thumb img { width: 100%; height: 100%; object-fit: contain; background: #e9e7dc; }
-    .artwork-thumb .empty-art { font: italic 22px Georgia, serif; color: #aab2a6; }
+    .artwork-card { position: relative; min-width: 0; border: 1px solid #34424d; border-radius: 8px; overflow: hidden; background: #18232d; transition: transform .18s, border-color .18s, box-shadow .18s; }
+    .artwork-card:hover { transform: translateY(-3px); border-color: #62727a; box-shadow: 0 12px 28px #050a1080; }
+    .artwork-open { width: 100%; padding: 0; border: 0; text-align: left; background: transparent; cursor: pointer; }
+    .artwork-delete { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; display: grid; place-items: center; padding: 0; border: 1px solid #52616a; border-radius: 5px; color: #e0e7e1; background: #18232ddd; cursor: pointer; }
+    .artwork-delete:hover { border-color: #ec806a; color: #ffd5c9; background: #28323a; }
+    .artwork-delete .icon { width: 16px; height: 16px; }
+    .artwork-thumb { height: 145px; display: grid; place-items: center; overflow: hidden; background: #111922; }
+    .artwork-thumb img { width: 100%; height: 100%; object-fit: contain; background: #111922; }
+    .artwork-thumb .empty-art { font: italic 22px Georgia, serif; color: #e5c879; }
     .artwork-meta { padding: 12px 14px 13px; }
-    .artwork-meta strong { display: block; margin-bottom: 5px; font-size: 13px; }
-    .artwork-meta span { color: var(--muted); font-size: 11px; }
-    .empty-library { grid-column: 1/-1; padding: 24px; border: 1px dashed #cdd4c9; border-radius: 8px; color: var(--muted); font-size: 13px; }
+    .artwork-meta strong { display: block; margin-bottom: 5px; color: #f3f1e8; font-size: 13px; }
+    .artwork-meta span { color: #aab9bd; font-size: 11px; }
+    .empty-library { grid-column: 1/-1; padding: 24px; border: 1px dashed #ffffff40; border-radius: 8px; color: #b7c2c3; font-size: 13px; }
 
-    .studio { min-height: 100vh; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #e9ebe5; }
+    .studio { min-height: 100vh; height: 100vh; display: flex; flex-direction: column; overflow: hidden; color: var(--ink); background: #e9ebe5; }
+    #studio[data-ui-theme="dark"] { --ink: #edf1ee; --muted: #aab7b7; --white: #1b252e; --line: #35434c; background: #111922; }
+    #studio[data-ui-theme="dark"] .subtle-button { border-color: var(--line); color: var(--ink); background: #26323a; }
+    #studio[data-ui-theme="dark"] .subtle-button:hover { background: #303d46; }
+    #studio[data-ui-theme="dark"] .tool-button { color: #aab7b7; }
+    #studio[data-ui-theme="dark"] .tool-button:hover { color: var(--ink); background: #2c3941; }
+    #studio[data-ui-theme="dark"] .tool-button.active { color: #a8dbc8; background: #263c3a; }
+    #studio[data-ui-theme="dark"] .tool-button[title]:hover::after { background: #e5e9e4; color: #18232c; }
+    #studio[data-ui-theme="dark"] .brush-option { color: var(--ink); }
+    #studio[data-ui-theme="dark"] .brush-option:hover { background: #26323a; }
+    #studio[data-ui-theme="dark"] .brush-option.active { border-color: #47665c; background: #253b38; }
+    #studio[data-ui-theme="dark"] .folder-row { border-color: var(--line); background: #222e36; }
+    #studio[data-ui-theme="dark"] .folder-row.active,
+    #studio[data-ui-theme="dark"] .layer-row.active { border-color: #47665c; background: #253b38; }
+    #studio[data-ui-theme="dark"] .folder-select,
+    #studio[data-ui-theme="dark"] .layer-row { color: var(--ink); }
+    #studio[data-ui-theme="dark"] .folder-control:hover,
+    #studio[data-ui-theme="dark"] .layer-row .visibility:hover,
+    #studio[data-ui-theme="dark"] .layer-row .layer-folder:hover:not(:disabled) { background: #35434c; }
+    #studio[data-ui-theme="dark"] .layer-row { background: #202b33; }
+    #studio[data-ui-theme="dark"] .layer-row .layer-clip.active { color: #a8dbc8; background: #263c3a; }
+    #studio[data-ui-theme="dark"] .blend-select { border-color: var(--line); color: var(--ink); background: #202b33; }
+    #studio[data-ui-theme="dark"] .compact-icon-button { color: var(--muted); }
+    #studio[data-ui-theme="dark"] .compact-icon-button:hover { background: #2c3941; }
+    #studio[data-ui-theme="dark"] .theme-choice { border-color: var(--line); color: var(--ink); background: #26323a; }
+    #studio[data-ui-theme="dark"] .theme-color-row { color: var(--ink); }
+    body[data-ui-theme="dark"] .size-dialog { color: #edf1ee; background: #1b252e; }
+    body[data-ui-theme="dark"] .size-fields input,
+    body[data-ui-theme="dark"] .size-fields select,
+    body[data-ui-theme="dark"] .preset { border-color: #35434c; color: #edf1ee; background: #26323a; }
     .studio-header { height: 58px; min-height: 58px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--white); border-bottom: 1px solid var(--line); }
     .header-left, .header-actions, .document-title, .tool-row, .panel-title, .control-row { display: flex; align-items: center; }
     .header-left { gap: 15px; min-width: 0; }
     .studio .brand { font-size: 17px; }
-    .studio .brand-mark { width: 27px; height: 27px; }
+    .studio .brand-mark { width: 27px; height: 27px; color: var(--green); }
     .header-divider { height: 25px; width: 1px; background: var(--line); }
     .document-title { min-width: 0; gap: 8px; }
     .document-title input { width: min(210px, 24vw); padding: 6px 3px; border: 0; background: transparent; font-weight: 700; }
@@ -89,17 +123,47 @@
     .tool-button[title]:hover::after { content: attr(title); position: absolute; z-index: 10; left: 48px; top: 50%; transform: translateY(-50%); padding: 7px 9px; border-radius: 4px; background: #24322e; color: white; font-size: 11px; white-space: nowrap; pointer-events: none; }
     .rail-divider { width: 27px; height: 1px; margin: 5px 0; background: var(--line); }
     .rail-spacer { flex: 1; }
-    .work-area { position: relative; min-width: 0; min-height: 0; display: grid; place-items: center; overflow: hidden; background-color: #e9ebe5; background-image: radial-gradient(#d4d9d1 0.7px, transparent 0.7px); background-size: 17px 17px; }
-    .canvas-frame { position: relative; max-width: calc(100% - 64px); max-height: calc(100% - 64px); box-shadow: 0 5px 20px #26362b26, 0 1px 3px #26362b1a; background: white; }
+    .studio { --workspace-color: #e9ebe5; --workspace-ink: #24322e; --workspace-dot: #d4d9d1; }
+    #studio[data-canvas-theme="night"] { --workspace-color: #111922; --workspace-ink: #f2f0e7; --workspace-dot: #344450; }
+    #studio[data-canvas-theme="bright"] { --workspace-color: #e6f1ed; --workspace-ink: #183532; --workspace-dot: #9dcdbd; }
+    .work-area { position: relative; min-width: 0; min-height: 0; display: grid; place-items: center; overflow: hidden; background-color: var(--workspace-color); background-image: radial-gradient(var(--workspace-dot) 0.7px, transparent 0.7px); background-size: 17px 17px; }
+    .canvas-frame { position: relative; max-width: none; max-height: none; transform-origin: center; transition: none; box-shadow: 0 5px 20px #26362b26, 0 1px 3px #26362b1a; background: white; }
     .canvas-frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
     .canvas-frame canvas:not(.paper):not(.drawing-surface) { pointer-events: none; }
     .canvas-frame .paper { position: relative; background: white; }
     .canvas-frame .drawing-surface { cursor: crosshair; }
-    .zoom-indicator { position: absolute; bottom: 12px; left: 14px; padding: 6px 9px; border: 1px solid #dce0d8; border-radius: 5px; color: #68736a; background: #fffefaed; font-size: 11px; }
+    .canvas-frame .stroke-preview { opacity: 0; }
+    .zoom-indicator { position: absolute; bottom: 12px; left: 14px; padding: 6px 9px; border: 1px solid color-mix(in srgb, var(--workspace-ink) 22%, transparent); border-radius: 5px; color: var(--workspace-ink); background: color-mix(in srgb, var(--workspace-color) 90%, transparent); font-size: 11px; }
+    .viewport-controls { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 3px; padding: 4px; border: 1px solid color-mix(in srgb, var(--workspace-ink) 22%, transparent); border-radius: 6px; color: var(--workspace-ink); background: color-mix(in srgb, var(--workspace-color) 90%, transparent); box-shadow: 0 2px 8px #26362b14; }
+    .viewport-controls button { width: 30px; height: 30px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: var(--workspace-ink); background: transparent; cursor: pointer; }
+    .viewport-controls button:hover { background: color-mix(in srgb, var(--workspace-ink) 12%, transparent); }
+    .viewport-controls .icon { width: 16px; height: 16px; }
+    .zoom-value { min-width: 42px; color: var(--workspace-ink); text-align: center; font-size: 10px; font-variant-numeric: tabular-nums; }
+    .theme-panel { position: absolute; z-index: 8; top: 14px; left: 14px; width: min(250px, calc(100% - 28px)); padding: 13px; display: none; border: 1px solid var(--line); border-radius: 7px; background: var(--white); box-shadow: 0 8px 24px #1b292526; }
+    .theme-panel.open { display: block; }
+    .theme-panel-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 12px; font-weight: 700; }
+    .theme-close { width: 25px; height: 25px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #68756b; background: transparent; cursor: pointer; }
+    .theme-close:hover { background: #edf2eb; }
+    .theme-close .icon { width: 15px; height: 15px; }
+    .theme-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .interface-theme-options { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 12px; }
+    .theme-color-options { display: grid; gap: 7px; margin-top: 12px; }
+    .theme-color-row { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #59675f; font-size: 10px; }
+    .theme-color-row input[type="color"] { width: 35px; height: 27px; padding: 2px; border: 1px solid var(--line); border-radius: 4px; background: white; cursor: pointer; }
+    .theme-choice { min-width: 0; padding: 5px; border: 1px solid var(--line); border-radius: 5px; color: #59675f; background: white; cursor: pointer; }
+    .theme-choice[aria-checked="true"] { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); }
+    .theme-swatch { height: 31px; display: block; margin-bottom: 5px; border: 1px solid #dfe3dc; border-radius: 3px; }
+    .theme-swatch.classic { background: radial-gradient(#cbd2c9 .8px, transparent .8px) 0 0/12px 12px, #e9ebe5; }
+    .theme-swatch.night { border-color: #344450; background: radial-gradient(#758c93 .8px, transparent .8px) 0 0/12px 12px, #111922; }
+    .theme-swatch.bright { background: radial-gradient(#9dcdbd .8px, transparent .8px) 0 0/12px 12px, #e6f1ed; }
+    .theme-swatch.interface-light { background: linear-gradient(90deg, #fffefa 0 25%, #e9ebe5 25% 50%, #fffefa 50% 75%, #e9ebe5 75%); }
+    .theme-swatch.interface-dark { border-color: #35434c; background: linear-gradient(90deg, #1b252e 0 25%, #26323a 25% 50%, #1b252e 50% 75%, #26323a 75%); }
+    .theme-choice span:last-child { display: block; font-size: 9px; text-align: center; }
     .inspector { overflow-y: auto; padding: 16px 15px 25px; background: var(--white); border-left: 1px solid var(--line); }
     .panel-section { padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
     .panel-title { justify-content: space-between; margin-bottom: 13px; }
     .panel-title h3 { margin: 0; font-size: 12px; }
+    .panel-actions { display: flex; align-items: center; gap: 3px; }
     .panel-title small { color: var(--muted); font-size: 10px; }
     .compact-icon-button { width: 25px; height: 25px; display: grid; place-items: center; border: 0; border-radius: 5px; color: #68756b; background: transparent; cursor: pointer; }
     .compact-icon-button:hover { background: #edf2eb; }
@@ -122,12 +186,40 @@
     .swatch.active { outline: 2px solid var(--green); outline-offset: 2px; }
     .color-label { margin-left: auto; color: var(--muted); font-size: 10px; }
     .layer-list { display: grid; gap: 5px; }
-    .layer-row { min-height: 39px; padding: 0 7px; display: flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 5px; background: #fafbf8; cursor: pointer; }
+    .folder-row { min-height: 34px; padding: 0 5px; display: flex; align-items: center; gap: 3px; border: 1px solid #e6e8df; border-radius: 5px; background: #f3f5ef; }
+    .folder-row.active { border-color: #c8ded0; background: #eff6f0; }
+    .folder-row.drop-target { border-color: var(--green); background: #e6f1e9; }
+    .folder-select { min-width: 0; flex: 1; display: flex; align-items: center; gap: 6px; padding: 0 3px; border: 0; text-align: left; color: #536258; background: transparent; cursor: pointer; }
+    .folder-select .icon { width: 15px; height: 15px; }
+    .folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 700; }
+    .folder-count { color: #929a92; font-size: 9px; }
+    .folder-control { width: 23px; height: 25px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #718077; background: transparent; cursor: pointer; }
+    .folder-control:hover { background: #e7ede5; }
+    .folder-control:disabled { color: #c5cbc4; cursor: default; background: transparent; }
+    .folder-control .icon { width: 14px; height: 14px; }
+    .layer-row { position: relative; min-height: 39px; padding: 0 7px; display: flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 5px; background: #fafbf8; cursor: pointer; }
+    .layer-row[draggable="true"] { cursor: grab; }
+    .layer-row.dragging { opacity: .45; }
+    .layer-row.drop-above { box-shadow: inset 0 2px var(--green); }
+    .layer-row.drop-below { box-shadow: inset 0 -2px var(--green); }
+    .layer-row.drop-merge { border-color: var(--coral); background: #fff0eb; }
+    .layer-row[data-drop-action="above"] .layer-index::after { content: " Above"; color: var(--green); }
+    .layer-row[data-drop-action="below"] .layer-index::after { content: " Below"; color: var(--green); }
+    .layer-row[data-drop-action="merge"] .layer-index::after { content: " Merge"; color: #b94d3c; }
+    .layer-row.child { margin-left: 13px; }
     .layer-row.active { border-color: #c8ded0; background: #eff6f0; }
     .layer-row .visibility { width: 22px; height: 24px; display: grid; place-items: center; border: 0; color: #718077; background: transparent; cursor: pointer; }
     .layer-row .visibility .icon { width: 15px; height: 15px; }
     .layer-row-name { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
     .layer-row .layer-index { color: #98a097; font-size: 9px; }
+    .layer-row .layer-clip { width: 21px; height: 24px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #88928a; background: transparent; cursor: pointer; }
+    .layer-row .layer-clip.active { color: var(--green); background: #e4f0e6; }
+    .layer-row .layer-clip:disabled { color: #c5cbc4; cursor: default; background: transparent; }
+    .layer-row .layer-clip .icon { width: 14px; height: 14px; }
+    .layer-row .layer-folder { width: 21px; height: 24px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #718077; background: transparent; cursor: pointer; }
+    .layer-row .layer-folder:hover:not(:disabled) { background: #e7ede5; }
+    .layer-row .layer-folder:disabled { color: #c5cbc4; cursor: default; }
+    .layer-row .layer-folder .icon { width: 14px; height: 14px; }
     .blend-select { width: 100%; height: 32px; padding: 0 8px; border: 1px solid var(--line); border-radius: 5px; color: #59675f; background: white; font-size: 10px; }
     .statusbar { height: 25px; min-height: 25px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; color: #6d7970; background: #fffefa; border-top: 1px solid var(--line); font-size: 10px; }
 
@@ -155,15 +247,13 @@
     @keyframes rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 820px) {
-      .welcome::before { width: 360px; height: 360px; right: -180px; top: 140px; opacity: .58; }
-      .welcome::after { width: 230px; height: 150px; right: 10px; top: 270px; }
+      .welcome::after { width: min(62vw, 330px); right: -5vw; top: 130px; }
       .welcome-content { padding: 66px 6vw 50px; }
       .library { margin-top: 75px; }
       .artwork-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .studio-main { grid-template-columns: 52px minmax(0, 1fr); }
       .inspector { position: absolute; z-index: 5; top: 58px; right: 0; bottom: 25px; width: 248px; box-shadow: -8px 0 20px #26362b16; transform: translateX(100%); transition: transform .2s ease; }
       .inspector.open { transform: translateX(0); }
-      .canvas-frame { max-width: calc(100% - 32px); max-height: calc(100% - 40px); }
       .tool-button[title]:hover::after { display: none; }
     }
     @media (max-width: 520px) {
@@ -191,7 +281,9 @@
       .tool-rail { padding: 8px 3px; }
       .tool-button { width: 37px; height: 37px; }
       .inspector { top: 52px; width: min(248px, calc(100vw - 46px)); }
-      .canvas-frame { max-width: calc(100% - 18px); max-height: calc(100% - 26px); }
+      .viewport-controls { right: 7px; bottom: 7px; gap: 1px; padding: 3px; }
+      .viewport-controls button { width: 28px; height: 28px; }
+      .zoom-indicator { bottom: 9px; left: 8px; }
       .size-dialog { padding: 20px 17px; }
       .preset-grid { gap: 6px; }
       .preset { padding: 7px; }
@@ -204,19 +296,33 @@
 </head>
 <body>
   <svg aria-hidden="true" width="0" height="0" style="position:absolute">
-    <symbol id="i-mark" viewBox="0 0 24 24"><path d="M12 3v18M4 8l16 8M4 16l16-8"/><circle cx="12" cy="12" r="2.4"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 24 24"><path d="m12 2.8 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 2.8Z"/><path d="m3.2 21 1.5-4.6 9.1-9.1 3.1 3.1-9.1 9.1L3.2 21Z"/><path d="m11.5 9.5 3.1 3.1M3.2 21l4.6-1.5"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
     <symbol id="i-brush" viewBox="0 0 24 24"><path d="m14 6 4 4M3 21c3.5 0 6-1.5 7-5l10-10a2.1 2.1 0 0 0-3-3L7 13c-3.5 1-4 4.5-4 8Z"/><path d="M7 17h.01"/></symbol>
     <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m7 21 12-12a2.8 2.8 0 0 0-4-4L3 17l4 4Zm0 0h14"/><path d="m11 9 4 4"/></symbol>
+    <symbol id="i-bucket" viewBox="0 0 24 24"><path d="m4 13 7-9 9 7-7 9H6l-2-7Z"/><path d="m11 4 9 7M4 18h16"/><path d="M19 15v.01"/></symbol>
+    <symbol id="i-move" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3l-3 3m3-3 3 3M12 21l-3-3m3 3 3-3M3 12l3-3m-3 3 3 3m15-3-3-3m3 3-3 3"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 12V5a1.5 1.5 0 0 1 3 0v6-8a1.5 1.5 0 0 1 3 0v8-6a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v7c0 4-2.5 7-6.5 7h-2c-2.3 0-3.8-1-5-2.7L3.4 14a1.7 1.7 0 0 1 2.7-2.1L8 14"/></symbol>
+    <symbol id="i-rotate-tool" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-5L4 8m0 0V3m0 5h5M4 13a8 8 0 0 0 14 5l2-2m0 0v5m0-5h-5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1 1.1.9-1.4 2.4-1.4-.5a7.9 7.9 0 0 1-1.5.9l-.2 1.5h-2.8l-.3-1.5a7.9 7.9 0 0 1-1.5-.9l-1.4.5-1.4-2.4 1.1-.9a7.4 7.4 0 0 1 0-1.8l-1.1-.9 1.4-2.4 1.4.5a7.9 7.9 0 0 1 1.5-.9l.3-1.5h2.8l.2 1.5a7.9 7.9 0 0 1 1.5.9l1.4-.5 1.4 2.4-1.1.9a7.4 7.4 0 0 1-.1 1.7Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.3"/><path d="m16.2 16.2 4.3 4.3M10.8 7v7.6M7 10.8h7.6"/></symbol>
+    <symbol id="i-zoom-out" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.3"/><path d="m16.2 16.2 4.3 4.3M7 10.8h7.6"/></symbol>
+    <symbol id="i-rotate-reset" viewBox="0 0 24 24"><path d="M4 8a8 8 0 1 1-.2 8M4 8V3m0 5h5"/><path d="M9 10h6v5H9z"/></symbol>
     <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a7 7 0 0 1 7 7v3"/></symbol>
     <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9h-9a7 7 0 0 0-7 7v3"/></symbol>
     <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
     <symbol id="i-smudge" viewBox="0 0 24 24"><path d="M12 3c-1.6 3-5.5 5.3-5.5 10a5.5 5.5 0 0 0 11 0C17.5 8.3 13.6 6 12 3Z"/><path d="M9 15c.5 1.2 1.4 1.8 2.8 1.8"/></symbol>
     <symbol id="i-blend" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6.5"/><circle cx="15" cy="12" r="6.5"/><path d="M12 6.2a6.5 6.5 0 0 1 0 11.6"/></symbol>
     <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a14 14 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7a10.8 10.8 0 0 0 4.1-.8"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M5 4h14v14H5z"/><path d="m8 14 4-4 4 4M8 20h11a2 2 0 0 0 2-2V7"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
     <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
   </svg>
 
@@ -256,28 +362,49 @@
       <nav class="tool-rail" aria-label="Drawing tools">
         <button class="tool-button active" data-tool="brush" title="Brush"><svg class="icon"><use href="#i-brush"/></svg></button>
         <button class="tool-button" data-tool="eraser" title="Eraser"><svg class="icon"><use href="#i-eraser"/></svg></button>
+        <button class="tool-button" data-tool="bucket" title="Bucket fill"><svg class="icon"><use href="#i-bucket"/></svg></button>
+        <button class="tool-button" data-tool="pan" title="Pan canvas"><svg class="icon"><use href="#i-hand"/></svg></button>
+        <button class="tool-button" data-tool="move" title="Move layer"><svg class="icon"><use href="#i-move"/></svg></button>
+        <button class="tool-button" data-tool="rotate" title="Rotate canvas"><svg class="icon"><use href="#i-rotate-tool"/></svg></button>
         <div class="rail-divider"></div>
         <button class="tool-button" id="undoButton" title="Undo"><svg class="icon"><use href="#i-undo"/></svg></button>
         <button class="tool-button" id="redoButton" title="Redo"><svg class="icon"><use href="#i-redo"/></svg></button>
         <div class="rail-divider"></div>
         <button class="tool-button" data-tool="smudge" title="Smudge"><svg class="icon"><use href="#i-smudge"/></svg></button>
-        <button class="tool-button" data-tool="blend" title="Blend"><svg class="icon"><use href="#i-blend"/></svg></button>
+        <button class="tool-button" data-tool="blend" title="Blur"><svg class="icon"><use href="#i-blend"/></svg></button>
         <div class="rail-spacer"></div>
+        <button class="tool-button" id="settingsButton" title="Appearance" aria-label="Appearance settings" aria-expanded="false" aria-controls="themePanel"><svg class="icon"><use href="#i-settings"/></svg></button>
         <button class="tool-button" id="layersToggle" title="Layers"><svg class="icon"><use href="#i-layers"/></svg></button>
       </nav>
       <section class="work-area" id="workArea" aria-label="Drawing page">
         <div class="canvas-frame" id="canvasFrame"></div>
-        <div class="zoom-indicator" id="zoomLabel">100%</div>
+        <section class="theme-panel" id="themePanel" role="dialog" aria-label="Workspace background theme">
+          <div class="theme-panel-heading"><span>Workspace background</span><button class="theme-close" id="closeThemePanel" aria-label="Close appearance settings"><svg class="icon"><use href="#i-close"/></svg></button></div>
+          <div class="theme-options interface-theme-options" role="radiogroup" aria-label="Choose interface theme">
+            <button class="theme-choice interface-theme-choice" type="button" role="radio" aria-checked="true" data-interface-theme="light"><span class="theme-swatch interface-light"></span><span>Light interface</span></button>
+            <button class="theme-choice interface-theme-choice" type="button" role="radio" aria-checked="false" data-interface-theme="dark"><span class="theme-swatch interface-dark"></span><span>Dark interface</span></button>
+          </div>
+          <div class="theme-options" role="radiogroup" aria-label="Choose workspace background">
+            <button class="theme-choice" type="button" role="radio" aria-checked="true" data-theme-choice="classic"><span class="theme-swatch classic"></span><span>Classic</span></button>
+            <button class="theme-choice" type="button" role="radio" aria-checked="false" data-theme-choice="night"><span class="theme-swatch night"></span><span>Night</span></button>
+            <button class="theme-choice" type="button" role="radio" aria-checked="false" data-theme-choice="bright"><span class="theme-swatch bright"></span><span>Bright</span></button>
+          </div>
+          <div class="theme-color-options">
+            <label class="theme-color-row">Workspace color<input type="color" id="workspaceColorPicker" value="#e9ebe5" aria-label="Choose workspace background color"></label>
+          </div>
+        </section>
+        <div class="zoom-indicator" id="rotationLabel">0 deg</div>
+        <div class="viewport-controls" aria-label="Canvas view controls"><button id="zoomOut" title="Zoom out" aria-label="Zoom out"><svg class="icon"><use href="#i-zoom-out"/></svg></button><span class="zoom-value" id="zoomLabel">100%</span><button id="zoomIn" title="Zoom in" aria-label="Zoom in"><svg class="icon"><use href="#i-zoom-in"/></svg></button><button id="resetRotation" title="Reset rotation" aria-label="Reset rotation"><svg class="icon"><use href="#i-rotate-reset"/></svg></button></div>
       </section>
       <aside class="inspector" id="inspector">
         <section class="panel-section">
           <div class="panel-title"><h3>Brush</h3><small id="toolLabel">Drawing</small></div>
           <div class="brush-list" id="brushList">
-            <button class="brush-option active" data-brush="pencil"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 13 7 10l4 2 5-5 4 2 8-5"/></svg></span><strong>Pencil</strong><small>soft grain</small></button>
+            <button class="brush-option active" data-brush="pencil"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 13 7 10l4 2 5-5 4 2 8-5"/></svg></span><strong>Pencil</strong><small>granite texture</small></button>
             <button class="brush-option" data-brush="pen"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 12h26"/></svg></span><strong>Ink pen</strong><small>crisp line</small></button>
             <button class="brush-option" data-brush="airbrush"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 9c5-3 8 3 13 0s8-3 13 0"/></svg></span><strong>Airbrush</strong><small>soft spray</small></button>
             <button class="brush-option" data-brush="watercolor"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 10c5-6 8 3 14-1s9 0 12-3"/></svg></span><strong>Watercolor</strong><small>watery wash</small></button>
-            <button class="brush-option" data-brush="rendering"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 13c7-1 14-6 26-8"/></svg></span><strong>Rendering</strong><small>tapered</small></button>
+            <button class="brush-option" data-brush="rendering"><span class="brush-preview"><svg viewBox="0 0 30 18"><path d="M2 13c7-1 14-6 26-8"/></svg></span><strong>Rendering</strong><small>pastel blend</small></button>
           </div>
         </section>
         <section class="panel-section">
@@ -285,6 +412,10 @@
           <input id="sizeSlider" type="range" min="1" max="100" value="18" aria-label="Brush size">
           <div class="field-label" style="margin-top:14px"><span>Opacity</span><span id="opacityValue">85%</span></div>
           <input id="opacitySlider" type="range" min="5" max="100" value="85" aria-label="Brush opacity">
+          <div id="toolStrengthControl" class="hidden">
+            <div class="field-label" style="margin-top:14px"><span id="toolStrengthLabel">Strength</span><span id="toolStrengthValue">50%</span></div>
+            <input id="toolStrengthSlider" type="range" min="1" max="100" value="50" aria-label="Tool strength">
+          </div>
         </section>
         <section class="panel-section">
           <div class="panel-title"><h3>Color</h3><small>Tap to choose</small></div>
@@ -302,8 +433,10 @@
           <div class="field-label" style="margin-top:10px"><span>Current color</span><span class="color-label" id="colorLabel">#277760</span></div>
         </section>
         <section class="panel-section">
-          <div class="panel-title"><h3>Layers</h3><button class="compact-icon-button" id="addLayer" title="Add layer"><svg class="icon"><use href="#i-plus"/></svg></button></div>
+          <div class="panel-title"><h3>Layers</h3><div class="panel-actions"><button class="compact-icon-button" id="addFolder" title="Add folder"><svg class="icon"><use href="#i-folder"/></svg></button><button class="compact-icon-button" id="addLayer" title="Add layer"><svg class="icon"><use href="#i-plus"/></svg></button></div></div>
           <div class="layer-list" id="layerList"></div>
+          <div class="field-label" style="margin-top:12px"><span id="layerOpacityLabel">Layer opacity</span><span id="layerOpacityValue">100%</span></div>
+          <input id="layerOpacitySlider" type="range" min="0" max="100" value="100" aria-label="Selected layer opacity">
         </section>
         <section class="panel-section" style="border:0;margin:0;padding:0">
           <div class="field-label"><span>Blend mode</span></div>
@@ -339,13 +472,52 @@
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
     const STORAGE_KEY = 'artzy-artworks-v1';
-    const state = { width: 1200, height: 800, layers: [], activeLayer: 0, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, drawing: false, lastPoint: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over' };
+    const state = { width: 1200, height: 800, pageColor: '#ffffff', paperCanvas: null, layers: [], folders: [], activeLayer: 0, activeFolderId: null, layersLoading: false, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, strength: .5, viewZoom: 1, viewPanX: 0, viewPanY: 0, viewRotation: 0, viewRotationTarget: 0, rotationFrame: 0, drawing: false, lastPoint: null, moveOrigin: null, folderMoveSnapshots: [], strokeCanvas: null, toolScratch: null, strokePoints: [], pencilTexture: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over' };
     let toastTimer;
 
     function icon(name) { return `<svg class="icon"><use href="#i-${name}"/></svg>`; }
     function showToast(message) {
       const toast = $('#toast'); toast.textContent = message; toast.classList.add('show');
       clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1900);
+    }
+    function getContrastInk(color) {
+      const red = parseInt(color.slice(1, 3), 16) / 255;
+      const green = parseInt(color.slice(3, 5), 16) / 255;
+      const blue = parseInt(color.slice(5, 7), 16) / 255;
+      const linear = channel => channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4;
+      const luminance = .2126 * linear(red) + .7152 * linear(green) + .0722 * linear(blue);
+      return luminance > .18 ? '#24322e' : '#f2f0e7';
+    }
+    function setCanvasTheme(theme, color = null) {
+      if (!['classic', 'night', 'bright', 'custom'].includes(theme)) return;
+      $('#studio').dataset.canvasTheme = theme;
+      $$('.theme-choice').forEach(button => button.setAttribute('aria-checked', String(button.dataset.themeChoice === theme)));
+      if (theme === 'custom' && color) {
+        $('#studio').style.setProperty('--workspace-color', color);
+        $('#studio').style.setProperty('--workspace-ink', getContrastInk(color));
+        $('#studio').style.setProperty('--workspace-dot', `color-mix(in srgb, ${getContrastInk(color)} 20%, transparent)`);
+        $('#workspaceColorPicker').value = color;
+      } else {
+        $('#studio').style.removeProperty('--workspace-color');
+        $('#studio').style.removeProperty('--workspace-ink');
+        $('#studio').style.removeProperty('--workspace-dot');
+        $('#workspaceColorPicker').value = ({ classic: '#e9ebe5', night: '#111922', bright: '#e6f1ed' })[theme];
+      }
+      try {
+        localStorage.setItem('artzy-canvas-theme', theme);
+        if (theme === 'custom' && color) localStorage.setItem('artzy-workspace-color', color);
+      } catch { }
+    }
+    function setInterfaceTheme(theme) {
+      if (!['light', 'dark'].includes(theme)) return;
+      $('#studio').dataset.uiTheme = theme;
+      document.body.dataset.uiTheme = theme;
+      $$('.interface-theme-choice').forEach(button => button.setAttribute('aria-checked', String(button.dataset.interfaceTheme === theme)));
+      try { localStorage.setItem('artzy-ui-theme', theme); } catch { }
+    }
+    function closeThemePanel() {
+      $('#themePanel').classList.remove('open');
+      $('#settingsButton').setAttribute('aria-expanded', 'false');
     }
     function getProjects() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
@@ -364,20 +536,34 @@
         grid.innerHTML = '<div class="empty-library">Your saved drawings will find a home here. Start a new page to make your first one.</div>';
         return;
       }
-      grid.innerHTML = projects.map(project => `<button class="artwork-card" data-project="${project.id}"><span class="artwork-thumb">${project.preview ? `<img src="${project.preview}" alt="">` : '<span class="empty-art">Artzy</span>'}</span><span class="artwork-meta"><strong>${escapeHtml(project.name || 'Untitled drawing')}</strong><span>${project.width} × ${project.height} px · ${new Date(project.updated).toLocaleDateString()}</span></span></button>`).join('');
-      $$('.artwork-card', grid).forEach(card => card.addEventListener('click', () => openProject(card.dataset.project)));
+      grid.innerHTML = projects.map(project => `<article class="artwork-card"><button class="artwork-open" data-project="${escapeHtml(project.id)}" aria-label="Open ${escapeHtml(project.name || 'Untitled drawing')}"><span class="artwork-thumb">${project.preview ? `<img src="${project.preview}" alt="">` : '<span class="empty-art">Artzy</span>'}</span><span class="artwork-meta"><strong>${escapeHtml(project.name || 'Untitled drawing')}</strong><span>${project.width} × ${project.height} px · ${new Date(project.updated).toLocaleDateString()}</span></span></button><button class="artwork-delete" data-delete="${escapeHtml(project.id)}" title="Delete saved drawing" aria-label="Delete ${escapeHtml(project.name || 'Untitled drawing')}">${icon('trash')}</button></article>`).join('');
+      $$('.artwork-open', grid).forEach(button => button.addEventListener('click', () => openProject(button.dataset.project)));
+      $$('.artwork-delete', grid).forEach(button => button.addEventListener('click', () => deleteProject(button.dataset.delete)));
+    }
+    function deleteProject(id) {
+      const project = getProjects().find(item => item.id === id);
+      if (!project || !window.confirm(`Delete "${project.name || 'Untitled drawing'}"? This cannot be undone.`)) return;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(getProjects().filter(item => item.id !== id)));
+        renderLibrary();
+      } catch {
+        showToast('Could not delete this drawing from this device.');
+      }
     }
     function escapeHtml(text) { return String(text).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]); }
 
-    function makeLayer(name, dataUrl = null, visible = true, blend = 'source-over') {
+    function makeLayer(name, dataUrl = null, visible = true, blend = 'source-over', opacity = 1, folderId = null, clipToBelow = false) {
       const canvas = document.createElement('canvas'); canvas.width = state.width; canvas.height = state.height;
       const context = canvas.getContext('2d', { willReadFrequently: true });
+      let resolveReady;
+      const ready = new Promise(resolve => { resolveReady = resolve; });
       if (dataUrl) {
         const image = new Image();
-        image.onload = () => { context.drawImage(image, 0, 0); renderLayers(); };
+        image.onload = () => { context.drawImage(image, 0, 0); renderLayers(); resolveReady(); };
+        image.onerror = resolveReady;
         image.src = dataUrl;
-      }
-      return { name, canvas, context, visible, blend };
+      } else resolveReady();
+      return { name, canvas, context, visible, blend, opacity, folderId, clipToBelow, ready };
     }
     function resetHistory() { state.history = []; state.historyIndex = -1; saveHistory(); }
     function saveHistory() {
@@ -388,6 +574,7 @@
       state.historyIndex = state.history.length - 1;
     }
     function restoreHistory(direction) {
+      if (state.activeLayer < 0) return;
       const next = state.historyIndex + direction;
       if (next < 0 || next >= state.history.length) return;
       state.historyIndex = next;
@@ -395,19 +582,42 @@
       renderLayers(); updateStatus(direction < 0 ? 'Undid last stroke.' : 'Restored stroke.');
     }
     function makeCanvas(width, height, project = null) {
+      if (state.rotationFrame) cancelAnimationFrame(state.rotationFrame);
+      state.rotationFrame = 0; state.viewZoom = 1; state.viewPanX = 0; state.viewPanY = 0;
+      state.viewRotation = 0; state.viewRotationTarget = 0;
       state.width = width; state.height = height; state.projectId = project?.id || null;
+      state.pageColor = project?.pageColor || '#ffffff';
+      state.folders = (project?.folders || []).map(folder => ({ id: folder.id, name: folder.name, visible: folder.visible !== false, opacity: folder.opacity ?? 1, position: Number(folder.position) || 0, collapsed: Boolean(folder.collapsed) }));
       state.layers = project?.layers?.length
-        ? project.layers.map(layer => makeLayer(layer.name, layer.data, layer.visible, layer.blend))
+        ? project.layers.map(layer => makeLayer(layer.name, layer.data, layer.visible, layer.blend, layer.opacity ?? 1, layer.folderId || null, Boolean(layer.clipToBelow)))
         : [makeLayer('Sketch'), makeLayer('Color')];
+      const canvasLayers = state.layers;
+      state.layersLoading = true;
+      Promise.all(canvasLayers.map(layer => layer.ready)).then(() => {
+        if (state.layers !== canvasLayers) return;
+        state.layersLoading = false;
+        renderLayers(); resetHistory();
+      });
+      state.folders.forEach(folder => {
+        const childIndices = state.layers.map((layer, index) => layer.folderId === folder.id ? index : -1).filter(index => index >= 0);
+        if (childIndices.length) folder.position = childIndices[0];
+        else folder.position = Math.min(state.layers.length, Math.max(0, folder.position));
+      });
       state.activeLayer = Math.max(0, state.layers.length - 1);
+      state.activeFolderId = state.layers[state.activeLayer].folderId || null;
       state.currentBlend = state.layers[state.activeLayer].blend || 'source-over';
       $('#documentName').value = project?.name || 'Untitled drawing';
       $('#dimensionLabel').textContent = `${width} × ${height} px`;
       $('#canvasStatus').textContent = `${width} × ${height} px`;
       const frame = $('#canvasFrame'); frame.innerHTML = '';
-      const paper = document.createElement('canvas'); paper.className = 'paper'; paper.width = width; paper.height = height; paper.setAttribute('aria-label', 'White drawing page');
+      const paper = document.createElement('canvas'); paper.className = 'paper'; paper.width = width; paper.height = height; paper.setAttribute('aria-label', 'Drawing page');
+      state.paperCanvas = paper;
+      paper.getContext('2d').fillStyle = state.pageColor;
+      paper.getContext('2d').fillRect(0, 0, width, height);
       frame.appendChild(paper);
       state.layers.forEach(layer => frame.appendChild(layer.canvas));
+      state.strokeCanvas = document.createElement('canvas'); state.strokeCanvas.className = 'stroke-preview'; state.strokeCanvas.width = width; state.strokeCanvas.height = height; frame.appendChild(state.strokeCanvas);
+      state.toolScratch = document.createElement('canvas');
       const surface = document.createElement('canvas'); surface.className = 'drawing-surface'; surface.width = width; surface.height = height; surface.setAttribute('aria-label', 'Drawing surface'); frame.appendChild(surface);
       surface.addEventListener('pointerdown', startStroke);
       surface.addEventListener('pointermove', continueStroke);
@@ -415,30 +625,206 @@
       surface.addEventListener('pointercancel', endStroke);
       surface.addEventListener('pointerleave', event => { if (state.drawing && event.buttons === 0) endStroke(); });
       $('#blendMode').value = state.currentBlend;
-      renderLayers(); renderLayerList(); resetHistory(); fitCanvas(); setView('studio');
+      syncLayerControls();
+      renderLayers(); renderLayerList(); fitCanvas(); setView('studio');
+    }
+    function folderForLayer(layer) { return state.folders.find(folder => folder.id === layer.folderId) || null; }
+    function getClipBase(index) {
+      const layer = state.layers[index];
+      if (!layer?.folderId || !layer.clipToBelow) return null;
+      for (let below = index - 1; below >= 0; below--) {
+        const candidate = state.layers[below];
+        if (candidate.folderId === layer.folderId && !candidate.clipToBelow) return candidate;
+      }
+      return null;
     }
     function renderLayers() {
-      state.layers.forEach(layer => {
-        layer.canvas.style.display = layer.visible ? 'block' : 'none';
+      const masks = new Map();
+      state.layers.forEach((layer, index) => {
+        const folder = folderForLayer(layer);
+        layer.canvas.style.display = layer.visible && (!folder || folder.visible) ? 'block' : 'none';
+        layer.canvas.style.opacity = layer.opacity * (folder?.opacity ?? 1);
         layer.canvas.style.mixBlendMode = layer.blend === 'source-over' ? 'normal' : layer.blend;
+        const base = getClipBase(index);
+        if (base && !masks.has(base)) masks.set(base, `url("${base.canvas.toDataURL('image/png')}")`);
+        const mask = base ? masks.get(base) : 'none';
+        layer.canvas.style.maskImage = mask;
+        layer.canvas.style.webkitMaskImage = mask;
+        layer.canvas.style.maskSize = '100% 100%';
+        layer.canvas.style.webkitMaskSize = '100% 100%';
+        layer.canvas.style.maskRepeat = 'no-repeat';
+        layer.canvas.style.webkitMaskRepeat = 'no-repeat';
+        $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .stroke-preview') || $('#canvasFrame .drawing-surface'));
       });
     }
     function fitCanvas() {
       if ($('#studio').classList.contains('hidden')) return;
       const work = $('#workArea'); const frame = $('#canvasFrame');
-      const maxWidth = Math.max(100, work.clientWidth - (innerWidth <= 520 ? 18 : 64));
-      const maxHeight = Math.max(100, work.clientHeight - (innerWidth <= 520 ? 26 : 64));
-      const scale = Math.min(maxWidth / state.width, maxHeight / state.height, 1);
+      const availableWidth = Math.max(100, work.clientWidth - (innerWidth <= 520 ? 18 : 64));
+      const availableHeight = Math.max(100, work.clientHeight - (innerWidth <= 520 ? 26 : 64));
+      const angle = state.viewRotation * Math.PI / 180;
+      const rotatedWidth = state.width * Math.abs(Math.cos(angle)) + state.height * Math.abs(Math.sin(angle));
+      const rotatedHeight = state.width * Math.abs(Math.sin(angle)) + state.height * Math.abs(Math.cos(angle));
+      const scale = Math.min(availableWidth / rotatedWidth, availableHeight / rotatedHeight, 1);
       frame.style.width = `${Math.round(state.width * scale)}px`;
       frame.style.height = `${Math.round(state.height * scale)}px`;
-      $('#zoomLabel').textContent = `${Math.round(scale * 100)}%`;
+      frame.style.transform = `translate(${state.viewPanX}px, ${state.viewPanY}px) rotate(${state.viewRotation}deg) scale(${state.viewZoom})`;
+      $('#zoomLabel').textContent = `${Math.round(scale * state.viewZoom * 100)}%`;
+      $('#rotationLabel').textContent = `${Math.round(((state.viewRotation % 360) + 360) % 360)} deg`;
+    }
+    function setViewZoom(zoom, clientX, clientY) {
+      const nextZoom = Math.min(5, Math.max(.25, zoom));
+      if (clientX !== undefined && clientY !== undefined && nextZoom !== state.viewZoom) {
+        const rect = $('#workArea').getBoundingClientRect();
+        const anchorX = clientX - (rect.left + rect.width / 2);
+        const anchorY = clientY - (rect.top + rect.height / 2);
+        const zoomRatio = nextZoom / state.viewZoom;
+        state.viewPanX = anchorX - (anchorX - state.viewPanX) * zoomRatio;
+        state.viewPanY = anchorY - (anchorY - state.viewPanY) * zoomRatio;
+      }
+      state.viewZoom = nextZoom; fitCanvas();
+    }
+    function setViewRotation(rotation) {
+      state.viewRotationTarget = rotation;
+      if (state.rotationFrame) return;
+      const animate = () => {
+        const difference = state.viewRotationTarget - state.viewRotation;
+        if (Math.abs(difference) < .08) {
+          state.viewRotation = state.viewRotationTarget;
+          state.rotationFrame = 0; fitCanvas(); return;
+        }
+        state.viewRotation += difference * .18;
+        fitCanvas();
+        state.rotationFrame = requestAnimationFrame(animate);
+      };
+      state.rotationFrame = requestAnimationFrame(animate);
+    }
+    function rotateView(degrees) {
+      setViewRotation(state.viewRotationTarget + degrees);
+    }
+    function resetViewRotation() {
+      state.viewRotation = 0;
+      state.viewRotationTarget = 0;
+      fitCanvas();
+    }
+    function getStackUnits() {
+      const units = [], seenFolders = new Set();
+      let index = 0;
+      while (index <= state.layers.length) {
+        state.folders.filter(folder => !seenFolders.has(folder.id) && folder.position === index && !state.layers.some(layer => layer.folderId === folder.id)).forEach(folder => {
+          seenFolders.add(folder.id); units.push({ folderId: folder.id, layers: [] });
+        });
+        if (index === state.layers.length) break;
+        const layer = state.layers[index];
+        if (layer.folderId && !seenFolders.has(layer.folderId)) {
+          const indices = state.layers.map((item, itemIndex) => item.folderId === layer.folderId ? itemIndex : -1).filter(itemIndex => itemIndex >= 0);
+          units.push({ folderId: layer.folderId, layers: indices.map(itemIndex => state.layers[itemIndex]) });
+          seenFolders.add(layer.folderId);
+          index = Math.max(...indices) + 1;
+        } else if (layer.folderId) index++;
+        else { units.push({ folderId: null, layers: [layer] }); index++; }
+      }
+      return units;
+    }
+    function moveFolder(folderId, direction) {
+      const units = getStackUnits();
+      const fromIndex = units.findIndex(unit => unit.folderId === folderId);
+      const toIndex = fromIndex + direction;
+      if (fromIndex < 0 || toIndex < 0 || toIndex >= units.length) return;
+      const activeLayer = state.layers[state.activeLayer];
+      [units[fromIndex], units[toIndex]] = [units[toIndex], units[fromIndex]];
+      state.layers = units.flatMap(unit => unit.layers);
+      let stackPosition = 0;
+      units.forEach(unit => {
+        if (unit.folderId) {
+          const folder = state.folders.find(item => item.id === unit.folderId);
+          folder.position = stackPosition;
+        }
+        stackPosition += unit.layers.length;
+      });
+      if (activeLayer) state.activeLayer = state.layers.indexOf(activeLayer);
+      renderLayers(); renderLayerList();
+      updateStatus('Folder order updated.');
     }
     function renderLayerList() {
       const list = $('#layerList');
-      list.innerHTML = state.layers.map((layer, index) => `<div class="layer-row ${index === state.activeLayer ? 'active' : ''}" data-layer="${index}"><button class="visibility" title="${layer.visible ? 'Hide' : 'Show'} layer" data-visible="${index}">${icon(layer.visible ? 'eye' : 'eye-off')}</button><span class="layer-row-name">${escapeHtml(layer.name)}</span><span class="layer-index">${index + 1}</span></div>`).reverse().join('');
+      const rows = [];
+      const stackUnits = getStackUnits();
+      const folderMarkup = folder => {
+        const count = state.layers.filter(layer => layer.folderId === folder.id).length;
+        const stackIndex = stackUnits.findIndex(unit => unit.folderId === folder.id);
+        return `<div class="folder-row ${folder.id === state.activeFolderId && state.activeLayer < 0 ? 'active' : ''}" data-folder-row="${escapeHtml(folder.id)}"><button class="folder-select" data-folder-select="${escapeHtml(folder.id)}">${icon('folder')}<span class="folder-name">${escapeHtml(folder.name)}</span><small class="folder-count">${count}</small></button><button class="folder-control" data-folder-shift="1" data-folder-id="${escapeHtml(folder.id)}" title="Move folder up" aria-label="Move ${escapeHtml(folder.name)} up" ${stackIndex === stackUnits.length - 1 ? 'disabled' : ''}>${icon('chevron-up')}</button><button class="folder-control" data-folder-shift="-1" data-folder-id="${escapeHtml(folder.id)}" title="Move folder down" aria-label="Move ${escapeHtml(folder.name)} down" ${stackIndex === 0 ? 'disabled' : ''}>${icon('chevron-down')}</button><button class="folder-control" data-folder-collapse="${escapeHtml(folder.id)}" title="${folder.collapsed ? 'Expand' : 'Collapse'} folder" aria-label="${folder.collapsed ? 'Expand' : 'Collapse'} ${escapeHtml(folder.name)}">${icon(folder.collapsed ? 'chevron-up' : 'chevron-down')}</button><button class="folder-control" data-folder-visible="${escapeHtml(folder.id)}" title="${folder.visible ? 'Hide' : 'Show'} folder" aria-label="${folder.visible ? 'Hide' : 'Show'} ${escapeHtml(folder.name)}">${icon(folder.visible ? 'eye' : 'eye-off')}</button><button class="folder-control" data-folder-add="${escapeHtml(folder.id)}" title="Add layer to folder" aria-label="Add layer to ${escapeHtml(folder.name)}">${icon('plus')}</button></div>`;
+      };
+      const layerMarkup = (layer, index) => {
+        const targetFolder = state.activeFolderId && state.activeFolderId !== layer.folderId ? state.folders.find(folder => folder.id === state.activeFolderId) : null;
+        const folderAction = targetFolder ? `Move ${layer.name} into ${targetFolder.name}` : `Remove ${layer.name} from folder`;
+        const canMoveFolder = Boolean(targetFolder || layer.folderId);
+        return `<div class="layer-row ${layer.folderId ? 'child' : ''} ${index === state.activeLayer ? 'active' : ''}" data-layer="${index}" draggable="true"><button class="visibility" title="${layer.visible ? 'Hide' : 'Show'} layer" data-visible="${index}">${icon(layer.visible ? 'eye' : 'eye-off')}</button><span class="layer-row-name">${escapeHtml(layer.name)}</span><span class="layer-index">${index + 1}</span><button class="layer-clip ${layer.clipToBelow ? 'active' : ''}" title="${layer.clipToBelow ? 'Remove clipping' : 'Clip to layer below in folder'}" aria-label="${layer.clipToBelow ? 'Remove clipping from' : 'Clip'} ${escapeHtml(layer.name)}" aria-pressed="${layer.clipToBelow}" data-clip="${index}" ${layer.folderId && (layer.clipToBelow || state.layers.slice(0, index).some(candidate => candidate.folderId === layer.folderId && !candidate.clipToBelow)) ? '' : 'disabled'}>${icon('clip')}</button><button class="layer-folder" title="${escapeHtml(folderAction)}" aria-label="${escapeHtml(folderAction)}" data-folder-move="${index}" ${canMoveFolder ? '' : 'disabled'}>${icon('folder')}</button></div>`;
+      };
+      let cursor = state.layers.length;
+      while (cursor >= 0) {
+        state.folders.filter(folder => folder.position === cursor && !state.layers.some(layer => layer.folderId === folder.id)).forEach(folder => rows.push(folderMarkup(folder)));
+        if (cursor === 0) break;
+        const index = cursor - 1;
+        const layer = state.layers[index];
+        if (!layer.folderId) { rows.push(layerMarkup(layer, index)); cursor--; continue; }
+        const folder = state.folders.find(item => item.id === layer.folderId);
+        if (!folder) { rows.push(layerMarkup(layer, index)); cursor--; continue; }
+        const childIndices = state.layers.map((child, childIndex) => child.folderId === folder.id ? childIndex : -1).filter(childIndex => childIndex >= 0);
+        if (index !== Math.max(...childIndices)) { cursor--; continue; }
+        rows.push(folderMarkup(folder));
+        if (!folder.collapsed) childIndices.reverse().forEach(childIndex => rows.push(layerMarkup(state.layers[childIndex], childIndex)));
+        cursor = folder.position;
+      }
+      list.innerHTML = rows.join('');
+      $$('.layer-row', list).forEach(row => {
+        row.addEventListener('dragstart', event => {
+          if (event.target.closest('button')) { event.preventDefault(); return; }
+          event.dataTransfer.setData('text/plain', row.dataset.layer);
+          event.dataTransfer.effectAllowed = 'move';
+          row.classList.add('dragging');
+        });
+        row.addEventListener('dragover', event => {
+          event.preventDefault();
+          const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
+          const action = position < .25 ? 'above' : position > .75 ? 'below' : 'merge';
+          row.dataset.dropAction = action;
+          row.classList.remove('drop-above', 'drop-below', 'drop-merge');
+          row.classList.add(`drop-${action}`);
+          event.dataTransfer.dropEffect = 'move';
+        });
+        row.addEventListener('dragleave', event => {
+          if (!row.contains(event.relatedTarget)) {
+            delete row.dataset.dropAction;
+            row.classList.remove('drop-above', 'drop-below', 'drop-merge');
+          }
+        });
+        row.addEventListener('drop', event => {
+          event.preventDefault();
+          const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
+          const action = position < .25 ? 'above' : position > .75 ? 'below' : 'merge';
+          $$('.layer-row', list).forEach(item => {
+            delete item.dataset.dropAction;
+            item.classList.remove('drop-above', 'drop-below', 'drop-merge');
+          });
+          moveLayerDrop(Number(event.dataTransfer.getData('text/plain')), Number(row.dataset.layer), action);
+        });
+        row.addEventListener('dragend', () => {
+          row.classList.remove('dragging', 'drop-above', 'drop-below', 'drop-merge');
+          delete row.dataset.dropAction;
+        });
+      });
+      $$('[data-folder-row]', list).forEach(row => {
+        row.addEventListener('dragover', event => { event.preventDefault(); row.classList.add('drop-target'); });
+        row.addEventListener('dragleave', event => { if (!row.contains(event.relatedTarget)) row.classList.remove('drop-target'); });
+        row.addEventListener('drop', event => {
+          event.preventDefault(); row.classList.remove('drop-target');
+          moveLayerToFolder(Number(event.dataTransfer.getData('text/plain')), row.dataset.folderRow);
+        });
+      });
       $$('.layer-row', list).forEach(row => {
         row.addEventListener('click', event => {
-          if (event.target.closest('[data-visible]')) return;
+          if (event.target.closest('[data-visible], [data-clip], [data-folder-move]')) return;
           selectLayer(Number(row.dataset.layer));
         });
       });
@@ -446,130 +832,515 @@
         event.stopPropagation(); const layer = state.layers[Number(button.dataset.visible)];
         layer.visible = !layer.visible; renderLayers(); renderLayerList();
       }));
+      $$('[data-clip]', list).forEach(button => button.addEventListener('click', event => {
+        event.stopPropagation();
+        const index = Number(button.dataset.clip), layer = state.layers[index];
+        layer.clipToBelow = !layer.clipToBelow; renderLayers(); renderLayerList();
+      }));
+      $$('[data-folder-move]', list).forEach(button => button.addEventListener('click', event => {
+        event.stopPropagation();
+        const index = Number(button.dataset.folderMove), layer = state.layers[index];
+        const targetFolderId = state.activeFolderId && state.activeFolderId !== layer.folderId ? state.activeFolderId : null;
+        moveLayerToFolder(index, targetFolderId);
+      }));
+      $$('[data-folder-select]', list).forEach(button => button.addEventListener('click', () => selectFolder(button.dataset.folderSelect)));
+      $$('[data-folder-visible]', list).forEach(button => button.addEventListener('click', () => {
+        const folder = state.folders.find(item => item.id === button.dataset.folderVisible);
+        folder.visible = !folder.visible; renderLayers(); renderLayerList();
+      }));
+      $$('[data-folder-collapse]', list).forEach(button => button.addEventListener('click', () => {
+        const folder = state.folders.find(item => item.id === button.dataset.folderCollapse);
+        folder.collapsed = !folder.collapsed; renderLayerList();
+      }));
+      $$('[data-folder-add]', list).forEach(button => button.addEventListener('click', () => addLayer(button.dataset.folderAdd)));
+      $$('[data-folder-shift]', list).forEach(button => button.addEventListener('click', () => moveFolder(button.dataset.folderId, Number(button.dataset.folderShift))));
+    }
+    function syncLayerControls() {
+      const layer = state.layers[state.activeLayer];
+      const folder = !layer && state.activeFolderId ? state.folders.find(item => item.id === state.activeFolderId) : null;
+      const opacityTarget = layer || folder;
+      $('#layerOpacitySlider').disabled = !opacityTarget;
+      $('#blendMode').disabled = !layer;
+      $('#layerOpacitySlider').value = opacityTarget ? Math.round(opacityTarget.opacity * 100) : 100;
+      $('#layerOpacityLabel').textContent = folder ? 'Folder opacity' : 'Layer opacity';
+      $('#layerOpacityValue').textContent = opacityTarget ? `${Math.round(opacityTarget.opacity * 100)}%` : '100%';
+      if (layer) $('#blendMode').value = layer.blend || 'source-over';
     }
     function selectLayer(index) {
       if (index === state.activeLayer) return;
-      state.activeLayer = index; state.currentBlend = state.layers[index].blend || 'source-over';
-      $('#blendMode').value = state.currentBlend; renderLayerList(); resetHistory();
+      state.activeLayer = index; state.activeFolderId = state.layers[index].folderId || null; state.currentBlend = state.layers[index].blend || 'source-over';
+      syncLayerControls(); renderLayerList(); resetHistory();
     }
-    function addLayer() {
+    function selectFolder(folderId) {
+      state.activeFolderId = folderId; state.activeLayer = -1;
+      syncLayerControls(); renderLayerList();
+      updateStatus('Folder selected. Select or add a layer to draw.');
+    }
+    function addFolder() {
+      const folder = { id: `folder-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, name: `Folder ${state.folders.length + 1}`, visible: true, opacity: 1, position: state.layers.length, collapsed: false };
+      state.folders.push(folder); state.activeFolderId = folder.id; state.activeLayer = -1;
+      syncLayerControls(); renderLayerList(); showToast('New folder added. Add a layer to start.');
+    }
+    function addLayer(folderId = state.activeFolderId) {
       if (state.layers.length >= 50) { showToast('You cannot add any more layers. The limit is 50.'); return; }
-      const layer = makeLayer(`Layer ${state.layers.length + 1}`);
-      state.layers.push(layer); state.activeLayer = state.layers.length - 1;
-      $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .drawing-surface'));
-      renderLayers(); renderLayerList(); resetHistory(); showToast('New layer added.');
+      const folder = state.folders.find(item => item.id === folderId) || null;
+      let index = state.layers.length;
+      if (folder) {
+        const childIndices = state.layers.map((layer, childIndex) => layer.folderId === folder.id ? childIndex : -1).filter(childIndex => childIndex >= 0);
+        index = childIndices.length ? Math.max(...childIndices) + 1 : Math.min(folder.position, state.layers.length);
+        state.folders.forEach(item => { if (item.id !== folder.id && item.position >= index) item.position++; });
+        if (!childIndices.length) folder.position = index;
+      }
+      const layer = makeLayer(`Layer ${state.layers.length + 1}`, null, true, 'source-over', 1, folder?.id || null);
+      state.layers.splice(index, 0, layer); state.activeLayer = index; state.activeFolderId = folder?.id || null;
+      $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .stroke-preview') || $('#canvasFrame .drawing-surface'));
+      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory(); showToast(folder ? 'Layer added to folder.' : 'New layer added.');
+    }
+    function moveLayerToFolder(index, targetFolderId) {
+      const layer = state.layers[index];
+      const target = state.folders.find(folder => folder.id === targetFolderId) || null;
+      if (!layer || (targetFolderId && !target) || layer.folderId === (target?.id || null)) return;
+      const sourceFolder = folderForLayer(layer);
+      state.layers.splice(index, 1);
+      state.folders.forEach(folder => { if (folder.id !== sourceFolder?.id && folder.position > index) folder.position--; });
+      if (sourceFolder) {
+        const remaining = state.layers.map((item, itemIndex) => item.folderId === sourceFolder.id ? itemIndex : -1).filter(itemIndex => itemIndex >= 0);
+        sourceFolder.position = remaining.length ? Math.min(...remaining) : Math.min(index, state.layers.length);
+      }
+      let targetIndex = state.layers.length;
+      if (target) {
+        const children = state.layers.map((item, itemIndex) => item.folderId === target.id ? itemIndex : -1).filter(itemIndex => itemIndex >= 0);
+        targetIndex = children.length ? Math.max(...children) + 1 : Math.min(target.position, state.layers.length);
+        state.folders.forEach(folder => { if (folder.id !== target.id && folder.position >= targetIndex) folder.position++; });
+        if (!children.length) target.position = targetIndex;
+      } else if (sourceFolder) {
+        targetIndex = sourceFolder.position;
+        state.folders.forEach(folder => { if (folder.position >= targetIndex) folder.position++; });
+      }
+      layer.folderId = target?.id || null;
+      state.layers.splice(targetIndex, 0, layer);
+      state.layers.forEach((item, itemIndex) => { if (item.clipToBelow && !getClipBase(itemIndex)) item.clipToBelow = false; });
+      state.activeLayer = state.layers.indexOf(layer); state.activeFolderId = target?.id || null;
+      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
+      showToast(target ? 'Layer moved into folder.' : 'Layer removed from folder.');
+    }
+    function removeLayerFromStack(index) {
+      const layer = state.layers[index], folder = folderForLayer(layer);
+      state.layers.splice(index, 1);
+      state.folders.forEach(item => { if (item.id !== folder?.id && item.position > index) item.position--; });
+      if (folder) {
+        const remaining = state.layers.map((item, itemIndex) => item.folderId === folder.id ? itemIndex : -1).filter(itemIndex => itemIndex >= 0);
+        folder.position = remaining.length ? Math.min(...remaining) : Math.min(index, state.layers.length);
+      }
+      return layer;
+    }
+    function moveLayerDrop(sourceIndex, targetIndex, action) {
+      if (sourceIndex === targetIndex) return;
+      const source = state.layers[sourceIndex], target = state.layers[targetIndex];
+      if (!source || !target) return;
+      if (action === 'merge') {
+        const sourceFolder = folderForLayer(source), clipBase = getClipBase(sourceIndex);
+        if (source.visible && (!sourceFolder || sourceFolder.visible)) {
+          let pixels = source.canvas;
+          if (clipBase) {
+            const clipped = document.createElement('canvas'); clipped.width = state.width; clipped.height = state.height;
+            const context = clipped.getContext('2d');
+            context.drawImage(source.canvas, 0, 0);
+            context.globalCompositeOperation = 'destination-in'; context.drawImage(clipBase.canvas, 0, 0);
+            pixels = clipped;
+          }
+          target.context.save();
+          target.context.globalAlpha = source.opacity * (sourceFolder?.opacity ?? 1);
+          target.context.globalCompositeOperation = source.blend || 'source-over';
+          target.context.drawImage(pixels, 0, 0);
+          target.context.restore();
+        }
+        const activeLayer = state.layers[state.activeLayer];
+        removeLayerFromStack(sourceIndex);
+        state.activeLayer = activeLayer === source ? state.layers.indexOf(target) : state.layers.indexOf(activeLayer);
+        if (state.activeLayer < 0 && activeLayer !== source) state.activeLayer = -1;
+        state.activeFolderId = state.activeLayer >= 0 ? state.layers[state.activeLayer].folderId || null : state.activeFolderId;
+        syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
+        showToast('Layers merged.');
+        return;
+      }
+      const activeLayer = state.layers[state.activeLayer];
+      const targetFolderId = target.folderId || null;
+      const sourceLayer = removeLayerFromStack(sourceIndex);
+      const adjustedTargetIndex = state.layers.indexOf(target);
+      const insertIndex = adjustedTargetIndex + (action === 'above' ? 1 : 0);
+      state.folders.forEach(folder => {
+        if (folder.id !== targetFolderId && folder.position >= insertIndex) folder.position++;
+      });
+      sourceLayer.folderId = targetFolderId;
+      state.layers.splice(insertIndex, 0, sourceLayer);
+      if (activeLayer) state.activeLayer = state.layers.indexOf(activeLayer);
+      state.activeFolderId = targetFolderId;
+      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
+      showToast(`Layer moved ${action} target.`);
     }
     function updateStatus(message) { $('#statusMessage').textContent = message; }
 
     function canvasPoint(event) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      return { x: (event.clientX - rect.left) * state.width / rect.width, y: (event.clientY - rect.top) * state.height / rect.height, pressure: event.pressure || .5 };
-    }
-    function sampleLayerColor(layer, x, y, radius = 0) {
-      const centerX = Math.min(state.width - 1, Math.max(0, Math.floor(x)));
-      const centerY = Math.min(state.height - 1, Math.max(0, Math.floor(y)));
-      const left = Math.max(0, centerX - radius);
-      const top = Math.max(0, centerY - radius);
-      const right = Math.min(state.width, centerX + radius + 1);
-      const bottom = Math.min(state.height, centerY + radius + 1);
-      const pixels = layer.context.getImageData(left, top, right - left, bottom - top).data;
-      let red = 0, green = 0, blue = 0, alpha = 0;
-      for (let index = 0; index < pixels.length; index += 4) {
-        const pixelAlpha = pixels[index + 3] / 255;
-        red += pixels[index] * pixelAlpha;
-        green += pixels[index + 1] * pixelAlpha;
-        blue += pixels[index + 2] * pixelAlpha;
-        alpha += pixelAlpha;
-      }
-      if (!alpha) return null;
-      const count = pixels.length / 4;
-      return { red: Math.round(red / alpha), green: Math.round(green / alpha), blue: Math.round(blue / alpha), alpha: alpha / count };
-    }
-    function mixSamples(first, second, amount) {
-      const firstWeight = first.alpha * (1 - amount), secondWeight = second.alpha * amount;
-      const totalWeight = firstWeight + secondWeight;
-      if (!totalWeight) return null;
+      const frame = $('#canvasFrame');
+      const rect = frame.getBoundingClientRect();
+      const screenX = event.clientX - (rect.left + rect.width / 2);
+      const screenY = event.clientY - (rect.top + rect.height / 2);
+      const angle = -state.viewRotation * Math.PI / 180;
+      const localX = (screenX * Math.cos(angle) - screenY * Math.sin(angle)) / state.viewZoom;
+      const localY = (screenX * Math.sin(angle) + screenY * Math.cos(angle)) / state.viewZoom;
       return {
-        red: Math.round((first.red * firstWeight + second.red * secondWeight) / totalWeight),
-        green: Math.round((first.green * firstWeight + second.green * secondWeight) / totalWeight),
-        blue: Math.round((first.blue * firstWeight + second.blue * secondWeight) / totalWeight),
-        alpha: first.alpha * (1 - amount) + second.alpha * amount
+        x: (localX + frame.clientWidth / 2) * state.width / frame.clientWidth,
+        y: (localY + frame.clientHeight / 2) * state.height / frame.clientHeight,
+        pressure: event.pressure || .5
       };
     }
-    function sampleCssColor(sample) {
-      return `rgba(${sample.red}, ${sample.green}, ${sample.blue}, ${sample.alpha})`;
+    function pointerAngle(event) {
+      const rect = $('#canvasFrame').getBoundingClientRect();
+      return Math.atan2(event.clientY - rect.top - rect.height / 2, event.clientX - rect.left - rect.width / 2) * 180 / Math.PI;
     }
     function startStroke(event) {
       if (event.button !== 0) return;
+      if (state.layersLoading) { showToast('Loading saved artwork. Please wait.'); return; }
+      if (state.tool === 'pan') {
+        event.preventDefault(); event.currentTarget.setPointerCapture(event.pointerId);
+        state.panStart = { x: event.clientX, y: event.clientY, panX: state.viewPanX, panY: state.viewPanY };
+        state.drawing = true; event.currentTarget.style.cursor = 'grabbing';
+        return;
+      }
+      if (state.tool === 'rotate') {
+        event.preventDefault(); event.currentTarget.setPointerCapture(event.pointerId);
+        const rotation = state.viewRotation;
+        state.rotateStart = { angle: pointerAngle(event), rotation };
+        setViewRotation(rotation);
+        state.drawing = true; event.currentTarget.style.cursor = 'grabbing';
+        return;
+      }
+      const movingFolder = state.tool === 'move' && state.activeLayer < 0 && state.activeFolderId;
+      if (state.activeLayer < 0 && !movingFolder) { showToast('Select a layer to draw or move.'); return; }
+      if (movingFolder && !state.layers.some(layer => layer.folderId === state.activeFolderId)) { showToast('Add a layer to the folder before moving it.'); return; }
+      if (state.activeLayer >= 0 && !state.layers[state.activeLayer]) { showToast('Select a layer to draw or move.'); return; }
       event.preventDefault(); event.currentTarget.setPointerCapture(event.pointerId);
+      if (state.tool === 'bucket') { fillBucket(canvasPoint(event)); return; }
       state.drawing = true; state.lastPoint = canvasPoint(event);
-      state.smudgeColor = state.tool === 'smudge' ? sampleLayerColor(state.layers[state.activeLayer], state.lastPoint.x, state.lastPoint.y) : null;
-      drawSegment(state.lastPoint, state.lastPoint, true);
+      if (state.tool === 'brush') {
+        state.strokePoints = [state.lastPoint];
+        const preview = state.strokeCanvas, layer = state.layers[state.activeLayer], layerCanvas = layer.canvas;
+        preview.getContext('2d').clearRect(0, 0, state.width, state.height);
+        preview.style.opacity = state.opacity * (state.brush === 'rendering' ? .55 : 1) * layer.opacity * (folderForLayer(layer)?.opacity ?? 1);
+        preview.style.maskImage = layerCanvas.style.maskImage;
+        preview.style.webkitMaskImage = layerCanvas.style.webkitMaskImage;
+        preview.style.maskSize = layerCanvas.style.maskSize;
+        preview.style.webkitMaskSize = layerCanvas.style.webkitMaskSize;
+        preview.style.maskRepeat = layerCanvas.style.maskRepeat;
+        preview.style.webkitMaskRepeat = layerCanvas.style.webkitMaskRepeat;
+        renderBrushStroke();
+      } else if (state.tool === 'move') {
+        if (state.activeLayer >= 0) {
+          const snapshot = state.toolScratch;
+          if (snapshot.width !== state.width || snapshot.height !== state.height) { snapshot.width = state.width; snapshot.height = state.height; }
+          const snapshotContext = snapshot.getContext('2d');
+          snapshotContext.clearRect(0, 0, state.width, state.height);
+          snapshotContext.drawImage(state.layers[state.activeLayer].canvas, 0, 0);
+          state.folderMoveSnapshots = [];
+        } else {
+          state.folderMoveSnapshots = state.layers.filter(layer => layer.folderId === state.activeFolderId).map(layer => {
+            const canvas = document.createElement('canvas'); canvas.width = state.width; canvas.height = state.height;
+            canvas.getContext('2d').drawImage(layer.canvas, 0, 0);
+            return { layer, canvas };
+          });
+        }
+        state.moveOrigin = state.lastPoint;
+      } else {
+        state.strokeCanvas.style.opacity = 0;
+        drawSegment(state.lastPoint, state.lastPoint, true);
+      }
     }
     function continueStroke(event) {
       if (!state.drawing) return;
-      const point = canvasPoint(event); drawSegment(state.lastPoint, point, false); state.lastPoint = point;
+      if (state.tool === 'pan') {
+        state.viewPanX = state.panStart.panX + event.clientX - state.panStart.x;
+        state.viewPanY = state.panStart.panY + event.clientY - state.panStart.y;
+        fitCanvas();
+        return;
+      }
+      if (state.tool === 'rotate') {
+        const angle = pointerAngle(event);
+        const delta = ((angle - state.rotateStart.angle + 540) % 360) - 180;
+        state.rotateStart.angle = angle;
+        state.rotateStart.rotation += delta * .75;
+        setViewRotation(state.rotateStart.rotation);
+        return;
+      }
+      const point = canvasPoint(event);
+      if (state.tool === 'brush') { state.strokePoints.push(point); renderBrushStroke(); }
+      else if (state.tool === 'move') moveLayerImage(point);
+      else drawSegment(state.lastPoint, point, false);
+      state.lastPoint = point;
     }
     function endStroke() {
       if (!state.drawing) return;
-      state.drawing = false; state.lastPoint = null; saveHistory(); renderLayers();
+      if (state.tool === 'pan') {
+        state.drawing = false; state.panStart = null;
+        $('#canvasFrame .drawing-surface').style.cursor = 'grab';
+        return;
+      }
+      if (state.tool === 'rotate') {
+        state.drawing = false; state.rotateStart = null;
+        $('#canvasFrame .drawing-surface').style.cursor = 'grab';
+        return;
+      }
+      const layer = state.layers[state.activeLayer];
+      if (state.tool === 'brush') {
+        layer.context.save();
+        layer.context.globalAlpha = state.opacity * (state.brush === 'rendering' ? .55 : 1);
+        layer.context.globalCompositeOperation = 'source-over';
+        layer.context.drawImage(state.strokeCanvas, 0, 0);
+        layer.context.restore();
+        state.strokeCanvas.getContext('2d').clearRect(0, 0, state.width, state.height);
+        state.strokeCanvas.style.opacity = 0;
+        state.strokePoints = [];
+      }
+      state.drawing = false; state.lastPoint = null; state.moveOrigin = null; state.folderMoveSnapshots = []; saveHistory(); renderLayers();
+    }
+    function moveLayerImage(point) {
+      const offsetX = point.x - state.moveOrigin.x, offsetY = point.y - state.moveOrigin.y;
+      const snapshots = state.activeLayer >= 0
+        ? [{ layer: state.layers[state.activeLayer], canvas: state.toolScratch }]
+        : state.folderMoveSnapshots;
+      snapshots.forEach(({ layer, canvas }) => {
+        layer.context.clearRect(0, 0, state.width, state.height);
+        layer.context.drawImage(canvas, offsetX, offsetY);
+      });
     }
     function drawSegment(from, to, initial) {
       const layer = state.layers[state.activeLayer];
       const ctx = layer.context;
       const dx = to.x - from.x, dy = to.y - from.y;
-      const distance = Math.hypot(dx, dy);
-      const steps = Math.max(1, Math.ceil(distance / Math.max(1, state.size * .18)));
-      ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
       if (state.tool === 'eraser') {
+        ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
         ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 1;
         ctx.strokeStyle = '#000'; ctx.lineWidth = state.size * 1.25;
         ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x || from.x + .01, to.y || from.y + .01); ctx.stroke();
         if (initial) { ctx.beginPath(); ctx.arc(from.x, from.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fillStyle = '#000'; ctx.fill(); }
+        ctx.restore();
       } else if (state.tool === 'smudge') {
-        const sampled = sampleLayerColor(layer, to.x, to.y);
-        if (sampled) state.smudgeColor = state.smudgeColor ? mixSamples(state.smudgeColor, sampled, .35) : sampled;
-        if (state.smudgeColor) {
-          ctx.globalAlpha = .65; ctx.strokeStyle = sampleCssColor(state.smudgeColor); ctx.lineWidth = state.size;
-          ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x || from.x + .01, to.y || from.y + .01); ctx.stroke();
-          if (initial) { ctx.beginPath(); ctx.arc(from.x, from.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fillStyle = ctx.strokeStyle; ctx.fill(); }
-        }
+        applySmudgeSegment(layer, from, to);
       } else if (state.tool === 'blend') {
-        const sampled = sampleLayerColor(layer, to.x, to.y, Math.max(1, Math.round(state.size * .12)));
-        if (sampled) {
-          ctx.globalAlpha = .55; ctx.strokeStyle = sampleCssColor(sampled); ctx.lineWidth = state.size * 1.4;
-          ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x || from.x + .01, to.y || from.y + .01); ctx.stroke();
-          if (initial) { ctx.beginPath(); ctx.arc(from.x, from.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fillStyle = ctx.strokeStyle; ctx.fill(); }
+        applyBlendSegment(layer, from, to, initial);
+      }
+    }
+    function fillBucket(point) {
+      const width = state.width, height = state.height;
+      const x = Math.min(width - 1, Math.max(0, Math.floor(point.x)));
+      const y = Math.min(height - 1, Math.max(0, Math.floor(point.y)));
+      const composite = document.createElement('canvas'); composite.width = width; composite.height = height;
+      const compositeContext = composite.getContext('2d', { willReadFrequently: true });
+      compositeContext.fillStyle = state.pageColor; compositeContext.fillRect(0, 0, width, height);
+      state.layers.forEach((layer, index) => {
+        const folder = folderForLayer(layer);
+        if (!layer.visible || (folder && !folder.visible)) return;
+        let source = layer.canvas;
+        const base = getClipBase(index);
+        if (base) {
+          const clipped = document.createElement('canvas'); clipped.width = width; clipped.height = height;
+          const clippedContext = clipped.getContext('2d');
+          clippedContext.drawImage(layer.canvas, 0, 0);
+          clippedContext.globalCompositeOperation = 'destination-in'; clippedContext.drawImage(base.canvas, 0, 0);
+          source = clipped;
         }
-      } else if (state.brush === 'airbrush') {
-        const color = state.color;
-        const rgb = [1, 3, 5].map(offset => parseInt(color.slice(offset, offset + 2), 16));
+        compositeContext.save();
+        compositeContext.globalCompositeOperation = layer.blend;
+        compositeContext.globalAlpha = layer.opacity * (folder?.opacity ?? 1);
+        compositeContext.drawImage(source, 0, 0);
+        compositeContext.restore();
+      });
+
+      const compositePixels = compositeContext.getImageData(0, 0, width, height).data;
+      const target = state.layers[state.activeLayer];
+      const targetImage = target.context.getImageData(0, 0, width, height);
+      const targetPixels = targetImage.data;
+      const startPixel = y * width + x;
+      const startOffset = startPixel * 4;
+      const red = compositePixels[startOffset], green = compositePixels[startOffset + 1], blue = compositePixels[startOffset + 2];
+      const matches = pixel => {
+        const offset = pixel * 4;
+        return Math.abs(compositePixels[offset] - red) <= 22
+          && Math.abs(compositePixels[offset + 1] - green) <= 22
+          && Math.abs(compositePixels[offset + 2] - blue) <= 22;
+      };
+      const visited = new Uint8Array(width * height);
+      const pending = [startPixel];
+      const fillRed = parseInt(state.color.slice(1, 3), 16);
+      const fillGreen = parseInt(state.color.slice(3, 5), 16);
+      const fillBlue = parseInt(state.color.slice(5, 7), 16);
+      const fillAlpha = Math.round(state.opacity * 255);
+
+      while (pending.length) {
+        const seed = pending.pop();
+        if (visited[seed] || !matches(seed)) continue;
+        const row = Math.floor(seed / width);
+        const column = seed % width;
+        let left = column, right = column;
+        while (left > 0 && !visited[row * width + left - 1] && matches(row * width + left - 1)) left--;
+        while (right < width - 1 && !visited[row * width + right + 1] && matches(row * width + right + 1)) right++;
+        let scanAbove = false, scanBelow = false;
+        for (let currentX = left; currentX <= right; currentX++) {
+          const pixel = row * width + currentX;
+          if (visited[pixel] || !matches(pixel)) { scanAbove = false; scanBelow = false; continue; }
+          visited[pixel] = 1;
+          const offset = pixel * 4;
+          targetPixels[offset] = fillRed;
+          targetPixels[offset + 1] = fillGreen;
+          targetPixels[offset + 2] = fillBlue;
+          targetPixels[offset + 3] = fillAlpha;
+          if (row > 0) {
+            const above = pixel - width;
+            const matching = !visited[above] && matches(above);
+            if (matching && !scanAbove) pending.push(above);
+            scanAbove = matching;
+          }
+          if (row < height - 1) {
+            const below = pixel + width;
+            const matching = !visited[below] && matches(below);
+            if (matching && !scanBelow) pending.push(below);
+            scanBelow = matching;
+          }
+        }
+      }
+      target.context.putImageData(targetImage, 0, 0);
+      saveHistory(); renderLayers(); updateStatus('Area filled.');
+    }
+    function traceInkPath(ctx, points) {
+      ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y);
+      for (let index = 1; index < points.length - 1; index++) {
+        const midpointX = (points[index].x + points[index + 1].x) / 2;
+        const midpointY = (points[index].y + points[index + 1].y) / 2;
+        ctx.quadraticCurveTo(points[index].x, points[index].y, midpointX, midpointY);
+      }
+      if (points.length > 1) ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+      else ctx.lineTo(points[0].x + .01, points[0].y + .01);
+    }
+    function getPencilTexture(ctx) {
+      if (!state.pencilTexture) {
+        const texture = document.createElement('canvas'); texture.width = 48; texture.height = 48;
+        const textureContext = texture.getContext('2d');
+        let seed = 0x6d2b79f5;
+        const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+        for (let index = 0; index < 230; index++) {
+          const radius = .25 + random() * .85;
+          textureContext.fillStyle = random() < .72 ? 'rgba(25, 31, 27, .55)' : 'rgba(255, 255, 255, .8)';
+          textureContext.beginPath(); textureContext.arc(random() * 48, random() * 48, radius, 0, Math.PI * 2); textureContext.fill();
+        }
+        state.pencilTexture = texture;
+      }
+      return ctx.createPattern(state.pencilTexture, 'repeat');
+    }
+    function renderBrushStroke() {
+      const ctx = state.strokeCanvas.getContext('2d');
+      const points = state.strokePoints;
+      ctx.clearRect(0, 0, state.width, state.height);
+      if (!points.length) return;
+      ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      if (state.brush === 'airbrush') {
+        const rgb = [1, 3, 5].map(offset => parseInt(state.color.slice(offset, offset + 2), 16));
         const radius = Math.max(2, state.size * .7);
-        ctx.globalAlpha = state.opacity;
-        for (let step = 0; step <= steps; step++) {
-          const x = from.x + dx * step / steps, y = from.y + dy * step / steps;
-          const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-          gradient.addColorStop(0, `rgba(${rgb.join(',')}, .22)`);
-          gradient.addColorStop(.55, `rgba(${rgb.join(',')}, .12)`);
-          gradient.addColorStop(1, `rgba(${rgb.join(',')}, 0)`);
-          ctx.fillStyle = gradient; ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();
+        for (let index = 0; index < points.length; index++) {
+          const from = points[index], to = points[index + 1] || from;
+          const distance = Math.hypot(to.x - from.x, to.y - from.y);
+          const steps = Math.max(1, Math.ceil(distance / Math.max(1, state.size * .18)));
+          for (let step = 0; step <= steps; step++) {
+            const x = from.x + (to.x - from.x) * step / steps, y = from.y + (to.y - from.y) * step / steps;
+            const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+            gradient.addColorStop(0, `rgba(${rgb.join(',')}, .22)`);
+            gradient.addColorStop(.55, `rgba(${rgb.join(',')}, .12)`);
+            gradient.addColorStop(1, `rgba(${rgb.join(',')}, 0)`);
+            ctx.fillStyle = gradient; ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();
+          }
         }
       } else {
-        ctx.strokeStyle = state.color; ctx.globalAlpha = state.opacity;
-        if (state.brush === 'watercolor') { ctx.globalAlpha *= .27; ctx.lineWidth = state.size * 1.5; }
-        if (state.brush === 'pencil') { ctx.globalAlpha *= .78; ctx.lineWidth = Math.max(1, state.size * .56); }
-        if (state.brush === 'rendering') {
-          ctx.globalCompositeOperation = 'multiply';
-          ctx.lineWidth = Math.max(1, state.size * Math.max(.16, to.pressure * 1.3));
+        ctx.strokeStyle = state.color;
+        ctx.globalAlpha = state.brush === 'watercolor' ? .27 : 1;
+        if (state.brush === 'watercolor') ctx.lineWidth = state.size * 1.5;
+        if (state.brush === 'pencil') ctx.lineWidth = Math.max(1, state.size * .56);
+        if (state.brush === 'rendering') ctx.lineWidth = Math.max(1, state.size * Math.max(.16, points[points.length - 1].pressure * 1.3));
+        if (state.brush === 'pen') ctx.lineWidth = Math.max(1, state.size * .82);
+        if (state.brush === 'rendering') ctx.filter = `blur(${Math.max(.8, state.size * .035)}px)`;
+        if (state.brush === 'pen') traceInkPath(ctx, points);
+        else {
+          ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y);
+          points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+          if (points.length === 1) ctx.lineTo(points[0].x + .01, points[0].y + .01);
         }
-        if (state.brush === 'pen') ctx.lineWidth = Math.max(1, state.size * .72);
-        ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x || from.x + .01, to.y || from.y + .01); ctx.stroke();
-        if (initial) { ctx.beginPath(); ctx.arc(from.x, from.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fillStyle = state.color; ctx.fill(); }
-        if (state.brush === 'watercolor' && distance > 1) {
-          ctx.globalAlpha = .08; ctx.lineWidth = state.size * 2.2; ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
+        ctx.stroke();
+        if (points.length === 1) { ctx.beginPath(); ctx.arc(points[0].x, points[0].y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fillStyle = state.color; ctx.fill(); }
+        if (state.brush === 'watercolor') {
+          ctx.globalAlpha = .08; ctx.lineWidth = state.size * 2.2;
+          ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y);
+          points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+          if (points.length === 1) ctx.lineTo(points[0].x + .01, points[0].y + .01);
+          ctx.stroke();
+        }
+        if (state.brush === 'pencil') {
+          ctx.save(); ctx.globalCompositeOperation = 'source-atop'; ctx.globalAlpha = .22;
+          ctx.fillStyle = getPencilTexture(ctx); ctx.fillRect(0, 0, state.width, state.height); ctx.restore();
         }
       }
       ctx.restore();
+    }
+    function drawLayerPatch(layer, sourceX, sourceY, targetX, targetY, radius, opacity, blur, compositeOperation) {
+      const padding = Math.ceil(blur * 2);
+      const size = Math.max(2, Math.ceil(radius * 2 + padding * 2));
+      const scratch = state.toolScratch;
+      if (scratch.width !== size || scratch.height !== size) { scratch.width = size; scratch.height = size; }
+      const scratchContext = scratch.getContext('2d');
+      scratchContext.clearRect(0, 0, size, size);
+      scratchContext.drawImage(layer.canvas, sourceX - radius - padding, sourceY - radius - padding, size, size, 0, 0, size, size);
+      if (blur) {
+        const center = size / 2;
+        const edge = radius + padding;
+        const feather = scratchContext.createRadialGradient(center, center, radius * .55, center, center, edge);
+        feather.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        feather.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        scratchContext.globalCompositeOperation = 'destination-in';
+        scratchContext.fillStyle = feather;
+        scratchContext.fillRect(0, 0, size, size);
+        scratchContext.globalCompositeOperation = 'source-over';
+      }
+      const ctx = layer.context;
+      ctx.save(); ctx.globalAlpha = opacity; ctx.globalCompositeOperation = compositeOperation;
+      if (!blur) { ctx.beginPath(); ctx.arc(targetX, targetY, radius, 0, Math.PI * 2); ctx.clip(); }
+      ctx.filter = blur ? `blur(${blur}px)` : 'none';
+      ctx.drawImage(scratch, targetX - radius - padding, targetY - radius - padding);
+      ctx.restore();
+    }
+    function applySmudgeSegment(layer, from, to) {
+      const dx = to.x - from.x, dy = to.y - from.y;
+      const distance = Math.hypot(dx, dy);
+      if (!distance) return;
+      const radius = Math.max(1, state.size * (.2 + state.strength * .3));
+      const steps = Math.max(1, Math.ceil(distance / Math.max(1, radius * .2)));
+      for (let step = 1; step <= steps; step++) {
+        const x = from.x + dx * step / steps, y = from.y + dy * step / steps;
+        drawLayerPatch(layer, x - dx / steps, y - dy / steps, x, y, radius, state.opacity * (.15 + state.strength * .85), 0, 'source-over');
+      }
+    }
+    function applyBlendSegment(layer, from, to, initial) {
+      const dx = to.x - from.x, dy = to.y - from.y;
+      const distance = Math.hypot(dx, dy);
+      const radius = Math.max(1, state.size / 2);
+      const blur = Math.max(1, state.size * (.05 + state.strength * .75));
+      const strengthOpacity = state.opacity * (.2 + state.strength * .8);
+      if (initial) {
+        drawLayerPatch(layer, from.x, from.y, from.x, from.y, radius, strengthOpacity, blur, 'source-atop');
+        return;
+      }
+      if (!distance) return;
+      const steps = Math.max(1, Math.ceil(distance / Math.max(1, radius * .2)));
+      for (let step = 1; step <= steps; step++) {
+        const x = from.x + dx * step / steps, y = from.y + dy * step / steps;
+        drawLayerPatch(layer, x, y, x, y, radius, strengthOpacity, blur, 'source-atop');
+      }
     }
 
     function chooseBrush(brush) {
@@ -581,8 +1352,12 @@
     function setTool(tool) {
       state.tool = tool;
       $$('.tool-button[data-tool]').forEach(button => button.classList.toggle('active', button.dataset.tool === tool));
-      $('#toolLabel').textContent = ({ brush: 'Drawing', eraser: 'Erasing', smudge: 'Smudging', blend: 'Blending' })[tool];
-      $('#canvasFrame .drawing-surface').style.cursor = tool === 'eraser' ? 'cell' : 'crosshair';
+      $('#toolLabel').textContent = ({ brush: 'Drawing', eraser: 'Erasing', bucket: 'Bucket fill', move: 'Moving layer', pan: 'Panning canvas', rotate: 'Rotating canvas', smudge: 'Smudging', blend: 'Blurring' })[tool];
+      const strengthControl = $('#toolStrengthControl');
+      const hasStrength = tool === 'smudge' || tool === 'blend';
+      strengthControl.classList.toggle('hidden', !hasStrength);
+      if (hasStrength) $('#toolStrengthLabel').textContent = tool === 'blend' ? 'Blur strength' : 'Smudge strength';
+      $('#canvasFrame .drawing-surface').style.cursor = tool === 'eraser' ? 'cell' : tool === 'move' ? 'move' : tool === 'pan' || tool === 'rotate' ? 'grab' : 'crosshair';
       if (tool === 'brush') $('#inspector').classList.add('open');
       updateStatus(`${tool[0].toUpperCase() + tool.slice(1)} tool selected.`);
     }
@@ -593,9 +1368,10 @@
     function saveProject() {
       const project = {
         id: state.projectId || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
-        name: $('#documentName').value.trim() || 'Untitled drawing', width: state.width, height: state.height,
+        name: $('#documentName').value.trim() || 'Untitled drawing', width: state.width, height: state.height, pageColor: state.pageColor,
         updated: new Date().toISOString(), preview: compositeDataUrl(),
-        layers: state.layers.map(layer => ({ name: layer.name, data: layer.canvas.toDataURL('image/png'), visible: layer.visible, blend: layer.blend }))
+        folders: state.folders.map(folder => ({ id: folder.id, name: folder.name, visible: folder.visible, opacity: folder.opacity, position: folder.position, collapsed: folder.collapsed })),
+        layers: state.layers.map(layer => ({ name: layer.name, data: layer.canvas.toDataURL('image/png'), visible: layer.visible, blend: layer.blend, opacity: layer.opacity, folderId: layer.folderId, clipToBelow: layer.clipToBelow }))
       };
       const projects = getProjects().filter(item => item.id !== project.id);
       projects.unshift(project);
@@ -608,8 +1384,23 @@
     }
     function compositeDataUrl() {
       const preview = document.createElement('canvas'); preview.width = Math.min(state.width, 500); preview.height = Math.round(state.height * preview.width / state.width);
-      const ctx = preview.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, preview.width, preview.height);
-      state.layers.forEach(layer => { if (layer.visible) { ctx.globalCompositeOperation = layer.blend; ctx.drawImage(layer.canvas, 0, 0, preview.width, preview.height); } });
+      const ctx = preview.getContext('2d'); ctx.fillStyle = state.pageColor; ctx.fillRect(0, 0, preview.width, preview.height);
+      state.layers.forEach((layer, index) => {
+        const folder = folderForLayer(layer);
+        if (!layer.visible || (folder && !folder.visible)) return;
+        let source = layer.canvas;
+        const base = getClipBase(index);
+        if (base) {
+          const clipped = document.createElement('canvas'); clipped.width = preview.width; clipped.height = preview.height;
+          const clippedContext = clipped.getContext('2d');
+          clippedContext.drawImage(layer.canvas, 0, 0, preview.width, preview.height);
+          clippedContext.globalCompositeOperation = 'destination-in';
+          clippedContext.drawImage(base.canvas, 0, 0, preview.width, preview.height);
+          source = clipped;
+        }
+        ctx.globalCompositeOperation = layer.blend; ctx.globalAlpha = layer.opacity * (folder?.opacity ?? 1);
+        ctx.drawImage(source, 0, 0, preview.width, preview.height);
+      });
       ctx.globalCompositeOperation = 'source-over'; return preview.toDataURL('image/jpeg', .72);
     }
     function openProject(id) {
@@ -651,15 +1442,50 @@
     $('#saveButton').addEventListener('click', saveProject);
     $('#undoButton').addEventListener('click', () => restoreHistory(-1));
     $('#redoButton').addEventListener('click', () => restoreHistory(1));
-    $('#addLayer').addEventListener('click', addLayer);
+    $('#addLayer').addEventListener('click', () => addLayer(null));
+    $('#addFolder').addEventListener('click', addFolder);
+    $('#settingsButton').addEventListener('click', () => {
+      const panel = $('#themePanel');
+      const isOpen = panel.classList.toggle('open');
+      $('#settingsButton').setAttribute('aria-expanded', String(isOpen));
+    });
+    $('#closeThemePanel').addEventListener('click', closeThemePanel);
+    $$('.interface-theme-choice').forEach(button => button.addEventListener('click', () => setInterfaceTheme(button.dataset.interfaceTheme)));
+    $$('.theme-choice').forEach(button => button.addEventListener('click', () => setCanvasTheme(button.dataset.themeChoice)));
+    $('#workspaceColorPicker').addEventListener('input', event => setCanvasTheme('custom', event.target.value));
+    document.addEventListener('click', event => {
+      if (!$('#themePanel').contains(event.target) && event.target !== $('#settingsButton') && !$('#settingsButton').contains(event.target)) closeThemePanel();
+    });
+    $('#zoomOut').addEventListener('click', event => setViewZoom(state.viewZoom / 1.2, event.clientX, event.clientY));
+    $('#zoomIn').addEventListener('click', event => setViewZoom(state.viewZoom * 1.2, event.clientX, event.clientY));
+    $('#resetRotation').addEventListener('click', resetViewRotation);
+    $('#workArea').addEventListener('wheel', event => {
+      event.preventDefault();
+      if (event.shiftKey) rotateView(event.deltaY * .08);
+      else setViewZoom(state.viewZoom * Math.exp(-event.deltaY * .001), event.clientX, event.clientY);
+    }, { passive: false });
     $('#layersToggle').addEventListener('click', () => $('#inspector').classList.toggle('open'));
     $$('.tool-button[data-tool]').forEach(button => button.addEventListener('click', () => setTool(button.dataset.tool)));
     $$('.brush-option').forEach(button => button.addEventListener('click', () => chooseBrush(button.dataset.brush)));
     $('#sizeSlider').addEventListener('input', event => { state.size = Number(event.target.value); $('#sizeValue').textContent = `${state.size} px`; });
     $('#opacitySlider').addEventListener('input', event => { state.opacity = Number(event.target.value) / 100; $('#opacityValue').textContent = `${event.target.value}%`; });
+    $('#toolStrengthSlider').addEventListener('input', event => {
+      state.strength = Number(event.target.value) / 100;
+      $('#toolStrengthValue').textContent = `${event.target.value}%`;
+    });
+    $('#layerOpacitySlider').addEventListener('input', event => {
+      const layer = state.layers[state.activeLayer];
+      const folder = !layer && state.activeFolderId ? state.folders.find(item => item.id === state.activeFolderId) : null;
+      const opacityTarget = layer || folder;
+      if (!opacityTarget) return;
+      opacityTarget.opacity = Number(event.target.value) / 100;
+      $('#layerOpacityValue').textContent = `${event.target.value}%`;
+      renderLayers();
+    });
     $('#colorPicker').addEventListener('input', event => setColor(event.target.value));
     $$('.swatch').forEach(swatch => swatch.addEventListener('click', () => setColor(swatch.dataset.color)));
     $('#blendMode').addEventListener('change', event => {
+      if (state.activeLayer < 0) return;
       state.currentBlend = event.target.value; state.layers[state.activeLayer].blend = state.currentBlend; renderLayers();
     });
     $('#documentName').addEventListener('change', () => updateStatus('Name updated. Remember to save your drawing.'));
@@ -667,9 +1493,14 @@
     window.addEventListener('keydown', event => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); restoreHistory(event.shiftKey ? 1 : -1); }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); saveProject(); }
-      if (event.key === 'Escape') closeSizeModal();
+      if (event.key === 'Escape') { closeSizeModal(); closeThemePanel(); }
     });
 
+    try {
+      const savedTheme = localStorage.getItem('artzy-canvas-theme') || 'classic';
+      setCanvasTheme(savedTheme, savedTheme === 'custom' ? localStorage.getItem('artzy-workspace-color') || '#e9ebe5' : null);
+    } catch { setCanvasTheme('classic'); }
+    try { setInterfaceTheme(localStorage.getItem('artzy-ui-theme') || 'light'); } catch { setInterfaceTheme('light'); }
     renderLibrary();
   </script>
 </body>
