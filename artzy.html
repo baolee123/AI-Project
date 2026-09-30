@@ -91,6 +91,8 @@
     #studio[data-ui-theme="dark"] .layer-row .layer-folder:hover:not(:disabled) { background: #35434c; }
     #studio[data-ui-theme="dark"] .layer-row { background: #202b33; }
     #studio[data-ui-theme="dark"] .layer-row .layer-clip.active { color: #a8dbc8; background: #263c3a; }
+    #studio[data-ui-theme="dark"] .layer-row .layer-delete { color: #d9a79c; }
+    #studio[data-ui-theme="dark"] .layer-row .layer-delete:hover { color: #ffd5c9; background: #503b3a; }
     #studio[data-ui-theme="dark"] .blend-select { border-color: var(--line); color: var(--ink); background: #202b33; }
     #studio[data-ui-theme="dark"] .compact-icon-button { color: var(--muted); }
     #studio[data-ui-theme="dark"] .compact-icon-button:hover { background: #2c3941; }
@@ -220,6 +222,10 @@
     .layer-row .layer-folder:hover:not(:disabled) { background: #e7ede5; }
     .layer-row .layer-folder:disabled { color: #c5cbc4; cursor: default; }
     .layer-row .layer-folder .icon { width: 14px; height: 14px; }
+    .layer-row .layer-delete { width: 21px; height: 24px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #9a726c; background: transparent; cursor: pointer; }
+    .layer-row .layer-delete:hover:not(:disabled) { color: #b94d3c; background: #f8e8e3; }
+    .layer-row .layer-delete:disabled { color: #c5cbc4; cursor: default; }
+    .layer-row .layer-delete .icon { width: 14px; height: 14px; }
     .blend-select { width: 100%; height: 32px; padding: 0 8px; border: 1px solid var(--line); border-radius: 5px; color: #59675f; background: white; font-size: 10px; }
     .statusbar { height: 25px; min-height: 25px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; color: #6d7970; background: #fffefa; border-top: 1px solid var(--line); font-size: 10px; }
 
@@ -759,7 +765,7 @@
         const targetFolder = state.activeFolderId && state.activeFolderId !== layer.folderId ? state.folders.find(folder => folder.id === state.activeFolderId) : null;
         const folderAction = targetFolder ? `Move ${layer.name} into ${targetFolder.name}` : `Remove ${layer.name} from folder`;
         const canMoveFolder = Boolean(targetFolder || layer.folderId);
-        return `<div class="layer-row ${layer.folderId ? 'child' : ''} ${index === state.activeLayer ? 'active' : ''}" data-layer="${index}" draggable="true"><button class="visibility" title="${layer.visible ? 'Hide' : 'Show'} layer" data-visible="${index}">${icon(layer.visible ? 'eye' : 'eye-off')}</button><span class="layer-row-name">${escapeHtml(layer.name)}</span><span class="layer-index">${index + 1}</span><button class="layer-clip ${layer.clipToBelow ? 'active' : ''}" title="${layer.clipToBelow ? 'Remove clipping' : 'Clip to layer below in folder'}" aria-label="${layer.clipToBelow ? 'Remove clipping from' : 'Clip'} ${escapeHtml(layer.name)}" aria-pressed="${layer.clipToBelow}" data-clip="${index}" ${layer.folderId && (layer.clipToBelow || state.layers.slice(0, index).some(candidate => candidate.folderId === layer.folderId && !candidate.clipToBelow)) ? '' : 'disabled'}>${icon('clip')}</button><button class="layer-folder" title="${escapeHtml(folderAction)}" aria-label="${escapeHtml(folderAction)}" data-folder-move="${index}" ${canMoveFolder ? '' : 'disabled'}>${icon('folder')}</button></div>`;
+        return `<div class="layer-row ${layer.folderId ? 'child' : ''} ${index === state.activeLayer ? 'active' : ''}" data-layer="${index}" draggable="true"><button class="visibility" title="${layer.visible ? 'Hide' : 'Show'} layer" data-visible="${index}">${icon(layer.visible ? 'eye' : 'eye-off')}</button><span class="layer-row-name">${escapeHtml(layer.name)}</span><span class="layer-index">${index + 1}</span><button class="layer-clip ${layer.clipToBelow ? 'active' : ''}" title="${layer.clipToBelow ? 'Remove clipping' : 'Clip to layer below in folder'}" aria-label="${layer.clipToBelow ? 'Remove clipping from' : 'Clip'} ${escapeHtml(layer.name)}" aria-pressed="${layer.clipToBelow}" data-clip="${index}" ${layer.folderId && (layer.clipToBelow || state.layers.slice(0, index).some(candidate => candidate.folderId === layer.folderId && !candidate.clipToBelow)) ? '' : 'disabled'}>${icon('clip')}</button><button class="layer-folder" title="${escapeHtml(folderAction)}" aria-label="${escapeHtml(folderAction)}" data-folder-move="${index}" ${canMoveFolder ? '' : 'disabled'}>${icon('folder')}</button><button class="layer-delete" title="Delete layer" aria-label="Delete ${escapeHtml(layer.name)}" data-delete-layer="${index}" ${state.layers.length === 1 ? 'disabled' : ''}>${icon('trash')}</button></div>`;
       };
       let cursor = state.layers.length;
       while (cursor >= 0) {
@@ -824,7 +830,7 @@
       });
       $$('.layer-row', list).forEach(row => {
         row.addEventListener('click', event => {
-          if (event.target.closest('[data-visible], [data-clip], [data-folder-move]')) return;
+          if (event.target.closest('[data-visible], [data-clip], [data-folder-move], [data-delete-layer]')) return;
           selectLayer(Number(row.dataset.layer));
         });
       });
@@ -842,6 +848,9 @@
         const index = Number(button.dataset.folderMove), layer = state.layers[index];
         const targetFolderId = state.activeFolderId && state.activeFolderId !== layer.folderId ? state.activeFolderId : null;
         moveLayerToFolder(index, targetFolderId);
+      }));
+      $$('[data-delete-layer]', list).forEach(button => button.addEventListener('click', event => {
+        event.stopPropagation(); deleteLayer(Number(button.dataset.deleteLayer));
       }));
       $$('[data-folder-select]', list).forEach(button => button.addEventListener('click', () => selectFolder(button.dataset.folderSelect)));
       $$('[data-folder-visible]', list).forEach(button => button.addEventListener('click', () => {
@@ -934,6 +943,34 @@
       }
       return layer;
     }
+    function deleteLayer(index) {
+      if (state.layersLoading) { showToast('Wait for the saved artwork to finish loading.'); return; }
+      if (state.layers.length <= 1) { showToast('A drawing needs at least one layer.'); return; }
+      const layer = state.layers[index];
+      if (!layer || !window.confirm(`Delete "${layer.name}"? This cannot be undone.`)) return;
+      const activeLayer = state.layers[state.activeLayer];
+      const selectedFolderId = state.activeFolderId;
+      const removedFolder = folderForLayer(layer);
+      removeLayerFromStack(index);
+      layer.canvas.remove();
+      state.layers.forEach((item, itemIndex) => { if (item.clipToBelow && !getClipBase(itemIndex)) item.clipToBelow = false; });
+      if (activeLayer && activeLayer !== layer) {
+        state.activeLayer = state.layers.indexOf(activeLayer);
+      } else if (activeLayer === layer) {
+        const sameFolderIndex = removedFolder
+          ? state.layers.findIndex(item => item.folderId === removedFolder.id)
+          : -1;
+        state.activeLayer = sameFolderIndex >= 0 ? sameFolderIndex : Math.min(index, state.layers.length - 1);
+      } else {
+        state.activeLayer = -1;
+      }
+      state.activeFolderId = state.activeLayer >= 0
+        ? state.layers[state.activeLayer].folderId || null
+        : state.folders.some(folder => folder.id === selectedFolderId) ? selectedFolderId : null;
+      if (state.activeLayer >= 0) state.currentBlend = state.layers[state.activeLayer].blend || 'source-over';
+      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
+      showToast('Layer deleted.');
+    }
     function moveLayerDrop(sourceIndex, targetIndex, action) {
       if (sourceIndex === targetIndex) return;
       const source = state.layers[sourceIndex], target = state.layers[targetIndex];
@@ -957,6 +994,7 @@
         }
         const activeLayer = state.layers[state.activeLayer];
         removeLayerFromStack(sourceIndex);
+        source.canvas.remove();
         state.activeLayer = activeLayer === source ? state.layers.indexOf(target) : state.layers.indexOf(activeLayer);
         if (state.activeLayer < 0 && activeLayer !== source) state.activeLayer = -1;
         state.activeFolderId = state.activeLayer >= 0 ? state.layers[state.activeLayer].folderId || null : state.activeFolderId;
