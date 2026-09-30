@@ -89,6 +89,8 @@
     #studio[data-ui-theme="dark"] .folder-control:hover,
     #studio[data-ui-theme="dark"] .layer-row .visibility:hover,
     #studio[data-ui-theme="dark"] .layer-row .layer-folder:hover:not(:disabled) { background: #35434c; }
+    #studio[data-ui-theme="dark"] .folder-control.folder-delete { color: #d9a79c; }
+    #studio[data-ui-theme="dark"] .folder-control.folder-delete:hover { color: #ffd5c9; background: #503b3a; }
     #studio[data-ui-theme="dark"] .layer-row { background: #202b33; }
     #studio[data-ui-theme="dark"] .layer-row .layer-clip.active { color: #a8dbc8; background: #263c3a; }
     #studio[data-ui-theme="dark"] .layer-row .layer-delete { color: #d9a79c; }
@@ -192,14 +194,21 @@
     .folder-row { min-height: 34px; padding: 0 5px; display: flex; align-items: center; gap: 3px; border: 1px solid #e6e8df; border-radius: 5px; background: #f3f5ef; }
     .folder-row.active { border-color: #c8ded0; background: #eff6f0; }
     .folder-row.drop-target { border-color: var(--green); background: #e6f1e9; }
+    .folder-row.drop-above { box-shadow: inset 0 2px var(--green); }
+    .folder-row.drop-below { box-shadow: inset 0 -2px var(--green); }
     .folder-select { min-width: 0; flex: 1; display: flex; align-items: center; gap: 6px; padding: 0 3px; border: 0; text-align: left; color: #536258; background: transparent; cursor: pointer; }
     .folder-select .icon { width: 15px; height: 15px; }
+    .folder-drag-handle { width: 18px; height: 25px; flex: 0 0 auto; display: grid; place-items: center; padding: 0; border: 0; color: #87918b; background: transparent; cursor: grab; }
+    .folder-drag-handle:active { cursor: grabbing; }
+    .folder-drag-handle .icon { width: 13px; height: 15px; }
     .folder-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 700; }
     .folder-count { color: #929a92; font-size: 9px; }
     .folder-control { width: 23px; height: 25px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; color: #718077; background: transparent; cursor: pointer; }
     .folder-control:hover { background: #e7ede5; }
     .folder-control:disabled { color: #c5cbc4; cursor: default; background: transparent; }
     .folder-control .icon { width: 14px; height: 14px; }
+    .folder-control.folder-delete { color: #9a726c; }
+    .folder-control.folder-delete:hover { color: #b94d3c; background: #f8e8e3; }
     .layer-row { position: relative; min-height: 39px; padding: 0 7px; display: flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 5px; background: #fafbf8; cursor: pointer; }
     .layer-row[draggable="true"] { cursor: grab; }
     .layer-row.dragging { opacity: .45; }
@@ -327,6 +336,7 @@
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a14 14 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.5 7 10 7a10.8 10.8 0 0 0 4.1-.8"/></symbol>
     <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="8" cy="6" r="1"/><circle cx="16" cy="6" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></symbol>
     <symbol id="i-clip" viewBox="0 0 24 24"><path d="M5 4h14v14H5z"/><path d="m8 14 4-4 4 4M8 20h11a2 2 0 0 0 2-2V7"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
@@ -745,13 +755,19 @@
       }
       return units;
     }
-    function moveFolder(folderId, direction) {
+    function moveFolderRelative(folderId, placement, targetLayerIndex = null, targetFolderId = null) {
       const units = getStackUnits();
       const fromIndex = units.findIndex(unit => unit.folderId === folderId);
-      const toIndex = fromIndex + direction;
-      if (fromIndex < 0 || toIndex < 0 || toIndex >= units.length) return;
+      const sourceUnit = units[fromIndex];
+      const targetLayer = targetLayerIndex === null ? null : state.layers[targetLayerIndex];
+      const targetUnit = targetFolderId
+        ? units.find(unit => unit.folderId === targetFolderId)
+        : units.find(unit => targetLayer && unit.layers.includes(targetLayer));
+      if (!sourceUnit || !targetUnit || sourceUnit === targetUnit) return;
       const activeLayer = state.layers[state.activeLayer];
-      [units[fromIndex], units[toIndex]] = [units[toIndex], units[fromIndex]];
+      units.splice(fromIndex, 1);
+      const targetIndex = units.indexOf(targetUnit);
+      units.splice(targetIndex + (placement === 'above' ? 1 : 0), 0, sourceUnit);
       state.layers = units.flatMap(unit => unit.layers);
       let stackPosition = 0;
       units.forEach(unit => {
@@ -763,7 +779,7 @@
       });
       if (activeLayer) state.activeLayer = state.layers.indexOf(activeLayer);
       renderLayers(); renderLayerList();
-      updateStatus('Folder order updated.');
+      updateStatus(`Folder moved ${placement} target.`);
     }
     function renderLayerList() {
       const list = $('#layerList');
@@ -771,8 +787,7 @@
       const stackUnits = getStackUnits();
       const folderMarkup = folder => {
         const count = state.layers.filter(layer => layer.folderId === folder.id).length;
-        const stackIndex = stackUnits.findIndex(unit => unit.folderId === folder.id);
-        return `<div class="folder-row ${folder.id === state.activeFolderId && state.activeLayer < 0 ? 'active' : ''}" data-folder-row="${escapeHtml(folder.id)}"><button class="folder-select" data-folder-select="${escapeHtml(folder.id)}">${icon('folder')}<span class="folder-name">${escapeHtml(folder.name)}</span><small class="folder-count">${count}</small></button><button class="folder-control" data-folder-shift="1" data-folder-id="${escapeHtml(folder.id)}" title="Move folder up" aria-label="Move ${escapeHtml(folder.name)} up" ${stackIndex === stackUnits.length - 1 ? 'disabled' : ''}>${icon('chevron-up')}</button><button class="folder-control" data-folder-shift="-1" data-folder-id="${escapeHtml(folder.id)}" title="Move folder down" aria-label="Move ${escapeHtml(folder.name)} down" ${stackIndex === 0 ? 'disabled' : ''}>${icon('chevron-down')}</button><button class="folder-control" data-folder-collapse="${escapeHtml(folder.id)}" title="${folder.collapsed ? 'Expand' : 'Collapse'} folder" aria-label="${folder.collapsed ? 'Expand' : 'Collapse'} ${escapeHtml(folder.name)}">${icon(folder.collapsed ? 'chevron-up' : 'chevron-down')}</button><button class="folder-control" data-folder-visible="${escapeHtml(folder.id)}" title="${folder.visible ? 'Hide' : 'Show'} folder" aria-label="${folder.visible ? 'Hide' : 'Show'} ${escapeHtml(folder.name)}">${icon(folder.visible ? 'eye' : 'eye-off')}</button><button class="folder-control" data-folder-add="${escapeHtml(folder.id)}" title="Add layer to folder" aria-label="Add layer to ${escapeHtml(folder.name)}">${icon('plus')}</button></div>`;
+        return `<div class="folder-row ${folder.id === state.activeFolderId && state.activeLayer < 0 ? 'active' : ''}" data-folder-row="${escapeHtml(folder.id)}"><button class="folder-drag-handle" type="button" draggable="true" data-folder-drag="${escapeHtml(folder.id)}" title="Drag to reorder folder" aria-label="Drag ${escapeHtml(folder.name)} to reorder">${icon('grip')}</button><button class="folder-select" data-folder-select="${escapeHtml(folder.id)}">${icon('folder')}<span class="folder-name">${escapeHtml(folder.name)}</span><small class="folder-count">${count}</small></button><button class="folder-control" data-folder-collapse="${escapeHtml(folder.id)}" title="${folder.collapsed ? 'Expand' : 'Collapse'} folder" aria-label="${folder.collapsed ? 'Expand' : 'Collapse'} ${escapeHtml(folder.name)}">${icon(folder.collapsed ? 'chevron-up' : 'chevron-down')}</button><button class="folder-control" data-folder-visible="${escapeHtml(folder.id)}" title="${folder.visible ? 'Hide' : 'Show'} folder" aria-label="${folder.visible ? 'Hide' : 'Show'} ${escapeHtml(folder.name)}">${icon(folder.visible ? 'eye' : 'eye-off')}</button><button class="folder-control" data-folder-add="${escapeHtml(folder.id)}" title="Add layer to folder" aria-label="Add layer to ${escapeHtml(folder.name)}">${icon('plus')}</button><button class="folder-control folder-delete" data-folder-delete="${escapeHtml(folder.id)}" title="Delete folder and its layers" aria-label="Delete ${escapeHtml(folder.name)} and ${count} layers">${icon('trash')}</button></div>`;
       };
       const layerMarkup = (layer, index) => {
         const targetFolder = state.activeFolderId && state.activeFolderId !== layer.folderId ? state.folders.find(folder => folder.id === state.activeFolderId) : null;
@@ -800,13 +815,15 @@
         row.addEventListener('dragstart', event => {
           if (event.target.closest('button')) { event.preventDefault(); return; }
           event.dataTransfer.setData('text/plain', row.dataset.layer);
+          event.dataTransfer.setData('application/x-artzy-layer', row.dataset.layer);
           event.dataTransfer.effectAllowed = 'move';
           row.classList.add('dragging');
         });
         row.addEventListener('dragover', event => {
           event.preventDefault();
           const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
-          const action = position < .25 ? 'above' : position > .75 ? 'below' : 'merge';
+          const draggingFolder = Array.from(event.dataTransfer.types).includes('application/x-artzy-folder');
+          const action = draggingFolder ? (position < .5 ? 'above' : 'below') : (position < .25 ? 'above' : position > .75 ? 'below' : 'merge');
           row.dataset.dropAction = action;
           row.classList.remove('drop-above', 'drop-below', 'drop-merge');
           row.classList.add(`drop-${action}`);
@@ -821,12 +838,14 @@
         row.addEventListener('drop', event => {
           event.preventDefault();
           const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
-          const action = position < .25 ? 'above' : position > .75 ? 'below' : 'merge';
+          const draggingFolder = Array.from(event.dataTransfer.types).includes('application/x-artzy-folder');
+          const action = draggingFolder ? (position < .5 ? 'above' : 'below') : (position < .25 ? 'above' : position > .75 ? 'below' : 'merge');
           $$('.layer-row', list).forEach(item => {
             delete item.dataset.dropAction;
             item.classList.remove('drop-above', 'drop-below', 'drop-merge');
           });
-          moveLayerDrop(Number(event.dataTransfer.getData('text/plain')), Number(row.dataset.layer), action);
+          if (draggingFolder) moveFolderRelative(event.dataTransfer.getData('application/x-artzy-folder'), action, Number(row.dataset.layer));
+          else moveLayerDrop(Number(event.dataTransfer.getData('text/plain')), Number(row.dataset.layer), action);
         });
         row.addEventListener('dragend', () => {
           row.classList.remove('dragging', 'drop-above', 'drop-below', 'drop-merge');
@@ -834,11 +853,35 @@
         });
       });
       $$('[data-folder-row]', list).forEach(row => {
-        row.addEventListener('dragover', event => { event.preventDefault(); row.classList.add('drop-target'); });
-        row.addEventListener('dragleave', event => { if (!row.contains(event.relatedTarget)) row.classList.remove('drop-target'); });
+        const dragHandle = $('[data-folder-drag]', row);
+        dragHandle.addEventListener('dragstart', event => {
+          event.dataTransfer.setData('application/x-artzy-folder', dragHandle.dataset.folderDrag);
+          event.dataTransfer.effectAllowed = 'move';
+          row.classList.add('dragging');
+        });
+        dragHandle.addEventListener('dragend', () => row.classList.remove('dragging', 'drop-target', 'drop-above', 'drop-below'));
+        row.addEventListener('dragover', event => {
+          event.preventDefault();
+          if (Array.from(event.dataTransfer.types).includes('application/x-artzy-folder')) {
+            const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
+            row.classList.remove('drop-target', 'drop-above', 'drop-below');
+            row.classList.add(position < .5 ? 'drop-above' : 'drop-below');
+          } else {
+            row.classList.remove('drop-above', 'drop-below'); row.classList.add('drop-target');
+          }
+        });
+        row.addEventListener('dragleave', event => {
+          if (!row.contains(event.relatedTarget)) row.classList.remove('drop-target', 'drop-above', 'drop-below');
+        });
         row.addEventListener('drop', event => {
-          event.preventDefault(); row.classList.remove('drop-target');
-          moveLayerToFolder(Number(event.dataTransfer.getData('text/plain')), row.dataset.folderRow);
+          event.preventDefault();
+          const position = (event.clientY - row.getBoundingClientRect().top) / row.getBoundingClientRect().height;
+          row.classList.remove('drop-target', 'drop-above', 'drop-below');
+          if (Array.from(event.dataTransfer.types).includes('application/x-artzy-folder')) {
+            moveFolderRelative(event.dataTransfer.getData('application/x-artzy-folder'), position < .5 ? 'above' : 'below', null, row.dataset.folderRow);
+          } else {
+            moveLayerToFolder(Number(event.dataTransfer.getData('text/plain')), row.dataset.folderRow);
+          }
         });
       });
       $$('.layer-row', list).forEach(row => {
@@ -875,7 +918,7 @@
         folder.collapsed = !folder.collapsed; renderLayerList();
       }));
       $$('[data-folder-add]', list).forEach(button => button.addEventListener('click', () => addLayer(button.dataset.folderAdd)));
-      $$('[data-folder-shift]', list).forEach(button => button.addEventListener('click', () => moveFolder(button.dataset.folderId, Number(button.dataset.folderShift))));
+      $$('[data-folder-delete]', list).forEach(button => button.addEventListener('click', () => deleteFolder(button.dataset.folderDelete)));
     }
     function syncLayerControls() {
       const layer = state.layers[state.activeLayer];
@@ -983,6 +1026,55 @@
       if (state.activeLayer >= 0) state.currentBlend = state.layers[state.activeLayer].blend || 'source-over';
       syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
       showToast('Layer deleted.');
+    }
+    function deleteFolder(folderId) {
+      if (state.layersLoading) { showToast('Wait for the saved artwork to finish loading.'); return; }
+      const folder = state.folders.find(item => item.id === folderId);
+      if (!folder) return;
+      const layersToDelete = state.layers.filter(layer => layer.folderId === folderId);
+      const layerWord = layersToDelete.length === 1 ? 'layer' : 'layers';
+      if (!window.confirm(`Delete folder "${folder.name}" and ${layersToDelete.length} ${layerWord}, including all artwork in them? This cannot be undone.`)) return;
+
+      const stackUnits = getStackUnits();
+      const fallbackPosition = folder.position;
+      const activeLayer = state.layers[state.activeLayer];
+      const activeFolderId = state.activeFolderId;
+      const remainingUnits = stackUnits.filter(unit => unit.folderId !== folderId);
+      layersToDelete.forEach(layer => layer.canvas.remove());
+      state.folders = state.folders.filter(item => item.id !== folderId);
+      state.layers = remainingUnits.flatMap(unit => unit.layers);
+      let stackPosition = 0;
+      remainingUnits.forEach(unit => {
+        if (unit.folderId) {
+          const remainingFolder = state.folders.find(item => item.id === unit.folderId);
+          if (remainingFolder) remainingFolder.position = stackPosition;
+        }
+        stackPosition += unit.layers.length;
+      });
+      state.layers.forEach((layer, index) => { if (layer.clipToBelow && !getClipBase(index)) layer.clipToBelow = false; });
+
+      if (!state.layers.length) {
+        const layer = makeLayer('Layer 1');
+        state.layers.push(layer);
+        $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .stroke-preview') || $('#canvasFrame .drawing-surface'));
+      }
+      if (activeLayer && !layersToDelete.includes(activeLayer)) {
+        state.activeLayer = state.layers.indexOf(activeLayer);
+        state.activeFolderId = state.layers[state.activeLayer]?.folderId || null;
+      } else if (!activeLayer && activeFolderId && activeFolderId !== folderId && state.folders.some(item => item.id === activeFolderId)) {
+        state.activeLayer = -1;
+        state.activeFolderId = activeFolderId;
+      } else if (state.layers.length) {
+        state.activeLayer = Math.min(Math.max(0, fallbackPosition), state.layers.length - 1);
+        state.activeFolderId = state.layers[state.activeLayer].folderId || null;
+      } else {
+        state.activeLayer = -1;
+        state.activeFolderId = state.folders.some(item => item.id === activeFolderId) ? activeFolderId : null;
+      }
+      state.currentBlend = state.layers[state.activeLayer]?.blend || 'source-over';
+      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory();
+      updateStatus('Folder and its layer stack were deleted.');
+      showToast(`Folder and ${layersToDelete.length} ${layerWord} deleted.`);
     }
     function moveLayerDrop(sourceIndex, targetIndex, action) {
       if (sourceIndex === targetIndex) return;
