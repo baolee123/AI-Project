@@ -129,6 +129,7 @@
     #studio[data-canvas-theme="night"] { --workspace-color: #111922; --workspace-ink: #f2f0e7; --workspace-dot: #344450; }
     #studio[data-canvas-theme="bright"] { --workspace-color: #e6f1ed; --workspace-ink: #183532; --workspace-dot: #9dcdbd; }
     .work-area { position: relative; min-width: 0; min-height: 0; display: grid; place-items: center; overflow: hidden; background-color: var(--workspace-color); background-image: radial-gradient(var(--workspace-dot) 0.7px, transparent 0.7px); background-size: 17px 17px; }
+    .work-area.pan-active { cursor: grabbing; }
     .canvas-frame { position: relative; max-width: none; max-height: none; transform-origin: center; transition: none; box-shadow: 0 5px 20px #26362b26, 0 1px 3px #26362b1a; background: white; }
     .canvas-frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
     .canvas-frame canvas:not(.paper):not(.drawing-surface) { pointer-events: none; }
@@ -400,7 +401,7 @@
           </div>
         </section>
         <div class="zoom-indicator" id="rotationLabel">0 deg</div>
-        <div class="viewport-controls" aria-label="Canvas view controls"><button id="zoomOut" title="Zoom out" aria-label="Zoom out"><svg class="icon"><use href="#i-zoom-out"/></svg></button><span class="zoom-value" id="zoomLabel">100%</span><button id="zoomIn" title="Zoom in" aria-label="Zoom in"><svg class="icon"><use href="#i-zoom-in"/></svg></button><button id="resetRotation" title="Reset rotation" aria-label="Reset rotation"><svg class="icon"><use href="#i-rotate-reset"/></svg></button></div>
+        <div class="viewport-controls" aria-label="Canvas view controls"><button id="zoomOut" title="Zoom out" aria-label="Zoom out"><svg class="icon"><use href="#i-zoom-out"/></svg></button><span class="zoom-value" id="zoomLabel">100%</span><button id="zoomIn" title="Zoom in" aria-label="Zoom in"><svg class="icon"><use href="#i-zoom-in"/></svg></button><button id="resetRotation" title="Reset view" aria-label="Reset view"><svg class="icon"><use href="#i-rotate-reset"/></svg></button></div>
       </section>
       <aside class="inspector" id="inspector">
         <section class="panel-section">
@@ -478,7 +479,7 @@
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
     const STORAGE_KEY = 'artzy-artworks-v1';
-    const state = { width: 1200, height: 800, pageColor: '#ffffff', paperCanvas: null, layers: [], folders: [], activeLayer: 0, activeFolderId: null, layersLoading: false, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, strength: .5, viewZoom: 1, viewPanX: 0, viewPanY: 0, viewRotation: 0, viewRotationTarget: 0, rotationFrame: 0, drawing: false, lastPoint: null, moveOrigin: null, folderMoveSnapshots: [], strokeCanvas: null, toolScratch: null, strokePoints: [], pencilTexture: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over' };
+    const state = { width: 1200, height: 800, pageColor: '#ffffff', paperCanvas: null, layers: [], folders: [], activeLayer: 0, activeFolderId: null, layersLoading: false, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, strength: .5, viewZoom: 1, viewPanX: 0, viewPanY: 0, viewRotation: 0, viewRotationTarget: 0, rotationFrame: 0, drawing: false, lastPoint: null, panStart: null, panElement: null, moveOrigin: null, folderMoveSnapshots: [], strokeCanvas: null, toolScratch: null, strokePoints: [], pencilTexture: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over' };
     let toastTimer;
 
     function icon(name) { return `<svg class="icon"><use href="#i-${name}"/></svg>`; }
@@ -674,6 +675,15 @@
       const scale = Math.min(availableWidth / rotatedWidth, availableHeight / rotatedHeight, 1);
       frame.style.width = `${Math.round(state.width * scale)}px`;
       frame.style.height = `${Math.round(state.height * scale)}px`;
+      const angleCos = Math.abs(Math.cos(angle)), angleSin = Math.abs(Math.sin(angle));
+      const canvasBoundsWidth = (frame.clientWidth * angleCos + frame.clientHeight * angleSin) * state.viewZoom;
+      const canvasBoundsHeight = (frame.clientWidth * angleSin + frame.clientHeight * angleCos) * state.viewZoom;
+      const visibleX = Math.min(120, Math.max(48, work.clientWidth * .25));
+      const visibleY = Math.min(120, Math.max(48, work.clientHeight * .25));
+      const maxPanX = Math.max(0, (work.clientWidth + canvasBoundsWidth) / 2 - visibleX);
+      const maxPanY = Math.max(0, (work.clientHeight + canvasBoundsHeight) / 2 - visibleY);
+      state.viewPanX = Math.max(-maxPanX, Math.min(maxPanX, state.viewPanX));
+      state.viewPanY = Math.max(-maxPanY, Math.min(maxPanY, state.viewPanY));
       frame.style.transform = `translate(${state.viewPanX}px, ${state.viewPanY}px) rotate(${state.viewRotation}deg) scale(${state.viewZoom})`;
       $('#zoomLabel').textContent = `${Math.round(scale * state.viewZoom * 100)}%`;
       $('#rotationLabel').textContent = `${Math.round(((state.viewRotation % 360) + 360) % 360)} deg`;
@@ -708,7 +718,10 @@
     function rotateView(degrees) {
       setViewRotation(state.viewRotationTarget + degrees);
     }
-    function resetViewRotation() {
+    function resetView() {
+      if (state.rotationFrame) cancelAnimationFrame(state.rotationFrame);
+      state.rotationFrame = 0;
+      state.viewZoom = 1; state.viewPanX = 0; state.viewPanY = 0;
       state.viewRotation = 0;
       state.viewRotationTarget = 0;
       fitCanvas();
@@ -1037,13 +1050,29 @@
       const rect = $('#canvasFrame').getBoundingClientRect();
       return Math.atan2(event.clientY - rect.top - rect.height / 2, event.clientX - rect.left - rect.width / 2) * 180 / Math.PI;
     }
+    function startCanvasPan(event, element) {
+      event.preventDefault(); element.setPointerCapture(event.pointerId);
+      state.panStart = { x: event.clientX, y: event.clientY, panX: state.viewPanX, panY: state.viewPanY };
+      state.panElement = element; state.drawing = true;
+      if (element === $('#workArea')) element.classList.add('pan-active');
+      else element.style.cursor = 'grabbing';
+    }
+    function updateCanvasPan(event) {
+      state.viewPanX = state.panStart.panX + event.clientX - state.panStart.x;
+      state.viewPanY = state.panStart.panY + event.clientY - state.panStart.y;
+      fitCanvas();
+    }
+    function finishCanvasPan() {
+      state.drawing = false; state.panStart = null;
+      if (state.panElement === $('#workArea')) state.panElement.classList.remove('pan-active');
+      else if (state.panElement) state.panElement.style.cursor = 'grab';
+      state.panElement = null;
+    }
     function startStroke(event) {
       if (event.button !== 0) return;
       if (state.layersLoading) { showToast('Loading saved artwork. Please wait.'); return; }
       if (state.tool === 'pan') {
-        event.preventDefault(); event.currentTarget.setPointerCapture(event.pointerId);
-        state.panStart = { x: event.clientX, y: event.clientY, panX: state.viewPanX, panY: state.viewPanY };
-        state.drawing = true; event.currentTarget.style.cursor = 'grabbing';
+        startCanvasPan(event, event.currentTarget);
         return;
       }
       if (state.tool === 'rotate') {
@@ -1097,9 +1126,7 @@
     function continueStroke(event) {
       if (!state.drawing) return;
       if (state.tool === 'pan') {
-        state.viewPanX = state.panStart.panX + event.clientX - state.panStart.x;
-        state.viewPanY = state.panStart.panY + event.clientY - state.panStart.y;
-        fitCanvas();
+        updateCanvasPan(event);
         return;
       }
       if (state.tool === 'rotate') {
@@ -1119,8 +1146,7 @@
     function endStroke() {
       if (!state.drawing) return;
       if (state.tool === 'pan') {
-        state.drawing = false; state.panStart = null;
-        $('#canvasFrame .drawing-surface').style.cursor = 'grab';
+        finishCanvasPan();
         return;
       }
       if (state.tool === 'rotate') {
@@ -1396,6 +1422,7 @@
       strengthControl.classList.toggle('hidden', !hasStrength);
       if (hasStrength) $('#toolStrengthLabel').textContent = tool === 'blend' ? 'Blur strength' : 'Smudge strength';
       $('#canvasFrame .drawing-surface').style.cursor = tool === 'eraser' ? 'cell' : tool === 'move' ? 'move' : tool === 'pan' || tool === 'rotate' ? 'grab' : 'crosshair';
+      $('#workArea').style.cursor = tool === 'pan' ? 'grab' : '';
       if (tool === 'brush') $('#inspector').classList.add('open');
       updateStatus(`${tool[0].toUpperCase() + tool.slice(1)} tool selected.`);
     }
@@ -1496,7 +1523,17 @@
     });
     $('#zoomOut').addEventListener('click', event => setViewZoom(state.viewZoom / 1.2, event.clientX, event.clientY));
     $('#zoomIn').addEventListener('click', event => setViewZoom(state.viewZoom * 1.2, event.clientX, event.clientY));
-    $('#resetRotation').addEventListener('click', resetViewRotation);
+    $('#resetRotation').addEventListener('click', resetView);
+    $('#workArea').addEventListener('pointerdown', event => {
+      if (event.target !== $('#workArea') || state.tool !== 'pan' || state.layersLoading) return;
+      startCanvasPan(event, $('#workArea'));
+    });
+    $('#workArea').addEventListener('pointermove', event => {
+      if (state.tool === 'pan' && state.drawing && state.panElement === $('#workArea')) updateCanvasPan(event);
+    });
+    ['pointerup', 'pointercancel'].forEach(type => $('#workArea').addEventListener(type, () => {
+      if (state.panElement === $('#workArea')) finishCanvasPan();
+    }));
     $('#workArea').addEventListener('wheel', event => {
       event.preventDefault();
       if (event.shiftKey) rotateView(event.deltaY * .08);
