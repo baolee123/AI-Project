@@ -456,6 +456,7 @@
       if (state.layers.length >= 50) { showToast('You cannot add any more layers. The limit is 50.'); return; }
       const layer = makeLayer(`Layer ${state.layers.length + 1}`);
       state.layers.push(layer); state.activeLayer = state.layers.length - 1;
+      $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .drawing-surface'));
       renderLayers(); renderLayerList(); resetHistory(); showToast('New layer added.');
     }
     function updateStatus(message) { $('#statusMessage').textContent = message; }
