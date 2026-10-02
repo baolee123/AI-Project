@@ -959,7 +959,7 @@
       const layer = makeLayer(`Layer ${state.layers.length + 1}`, null, true, 'source-over', 1, folder?.id || null);
       state.layers.splice(index, 0, layer); state.activeLayer = index; state.activeFolderId = folder?.id || null;
       $('#canvasFrame').insertBefore(layer.canvas, $('#canvasFrame .stroke-preview') || $('#canvasFrame .drawing-surface'));
-      syncLayerControls(); renderLayers(); renderLayerList(); resetHistory(); showToast(folder ? 'Layer added to folder.' : 'New layer added.');
+      setTool('brush'); syncLayerControls(); renderLayers(); renderLayerList(); resetHistory(); showToast(folder ? 'Layer added to folder.' : 'New layer added.');
     }
     function moveLayerToFolder(index, targetFolderId) {
       const layer = state.layers[index];
@@ -1502,7 +1502,7 @@
     function chooseBrush(brush) {
       state.brush = brush;
       $$('.brush-option').forEach(button => button.classList.toggle('active', button.dataset.brush === brush));
-      if (state.tool !== 'eraser' && state.tool !== 'smudge' && state.tool !== 'blend') setTool('brush');
+      setTool('brush');
       updateStatus(`${brush[0].toUpperCase() + brush.slice(1)} selected.`);
     }
     function setTool(tool) {
@@ -1521,6 +1521,7 @@
     function setColor(color) {
       state.color = color; $('#colorPicker').value = color; $('#colorLabel').textContent = color.toUpperCase();
       $$('.swatch').forEach(swatch => swatch.classList.toggle('active', swatch.dataset.color.toLowerCase() === color.toLowerCase()));
+      setTool('brush');
     }
     function saveProject() {
       const project = {
