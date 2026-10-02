@@ -103,6 +103,7 @@
     body[data-ui-theme="dark"] .size-dialog { color: #edf1ee; background: #1b252e; }
     body[data-ui-theme="dark"] .size-fields input,
     body[data-ui-theme="dark"] .size-fields select,
+    body[data-ui-theme="dark"] .download-format select,
     body[data-ui-theme="dark"] .preset { border-color: #35434c; color: #edf1ee; background: #26323a; }
     .studio-header { height: 58px; min-height: 58px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--white); border-bottom: 1px solid var(--line); }
     .header-left, .header-actions, .document-title, .tool-row, .panel-title, .control-row { display: flex; align-items: center; }
@@ -258,6 +259,14 @@
     .dialog-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
     .dialog-footer .hint { color: var(--muted); font-size: 10px; }
     .dialog-footer .primary-button { min-height: 39px; padding: 0 14px; font-size: 12px; }
+    .leave-footer { gap: 10px; flex-wrap: wrap; }
+    .dialog-actions { display: flex; align-items: center; gap: 8px; }
+    #keepEditing { border-color: #cfd4cf; color: #000; background: #fff; }
+    #keepEditing:hover { color: #000; background: #f3f5f1; }
+    #discardChanges { border-color: #d44343; color: #000; background: #e75b5b; }
+    #discardChanges:hover { color: #000; background: #f06a6a; }
+    .download-format { display: grid; gap: 6px; color: #68746b; font-size: 10px; }
+    .download-format select { width: 100%; height: 36px; padding: 0 9px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: white; }
     .toast { position: fixed; z-index: 30; left: 50%; bottom: 35px; transform: translate(-50%, 10px); padding: 10px 15px; border-radius: 6px; color: white; background: #263a32; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
     @keyframes rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
@@ -331,6 +340,7 @@
     <symbol id="i-smudge" viewBox="0 0 24 24"><path d="M12 3c-1.6 3-5.5 5.3-5.5 10a5.5 5.5 0 0 0 11 0C17.5 8.3 13.6 6 12 3Z"/><path d="M9 15c.5 1.2 1.4 1.8 2.8 1.8"/></symbol>
     <symbol id="i-blend" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6.5"/><circle cx="15" cy="12" r="6.5"/><path d="M12 6.2a6.5 6.5 0 0 1 0 11.6"/></symbol>
     <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 20h16"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
@@ -372,6 +382,7 @@
       <div class="header-actions">
         <button class="subtle-button" id="homeButton" title="Back to your art"><svg class="icon"><use href="#i-home"/></svg>My art</button>
         <button class="subtle-button" id="newCanvasButton" title="Choose page size"><svg class="icon"><use href="#i-plus"/></svg>New</button>
+        <button class="subtle-button" id="downloadButton" title="Download your art" aria-label="Download your art"><svg class="icon"><use href="#i-download"/></svg>Download</button>
         <button class="save-button" id="saveButton"><svg class="icon"><use href="#i-save"/></svg>Save</button>
       </div>
     </header>
@@ -483,13 +494,30 @@
       <div class="dialog-footer"><span class="hint">Custom pages from 100 to 3000 pixels.</span><button class="primary-button" id="createCanvas"><svg class="icon"><use href="#i-plus"/></svg>Create page</button></div>
     </section>
   </div>
+  <div class="modal-backdrop hidden" id="leaveConfirmModal" role="dialog" aria-modal="true" aria-labelledby="leaveConfirmTitle">
+    <section class="size-dialog">
+      <div class="dialog-heading"><div><div class="eyebrow">Before you go</div><h2 id="leaveConfirmTitle">Save your art?</h2></div><button class="close-button" id="closeLeaveConfirm" aria-label="Keep editing"><svg class="icon"><use href="#i-close"/></svg></button></div>
+      <p>Your latest changes are not saved on this device.</p>
+      <div class="dialog-footer leave-footer">
+        <button class="subtle-button" id="keepEditing">Keep editing</button>
+        <div class="dialog-actions"><button class="subtle-button" id="discardChanges">Discard</button><button class="primary-button" id="saveAndLeave"><svg class="icon"><use href="#i-save"/></svg>Save &amp; return</button></div>
+      </div>
+    </section>
+  </div>
+  <div class="modal-backdrop hidden" id="downloadModal" role="dialog" aria-modal="true" aria-labelledby="downloadTitle">
+    <section class="size-dialog">
+      <div class="dialog-heading"><div><div class="eyebrow">Export</div><h2 id="downloadTitle">Download your art</h2></div><button class="close-button" id="closeDownload" aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button></div>
+      <label class="download-format">File format<select id="downloadFormat"><option value="png">PNG</option><option value="jpg">JPG</option></select></label>
+      <div class="dialog-footer"><span class="hint">Export at the original canvas size.</span><button class="primary-button" id="confirmDownload"><svg class="icon"><use href="#i-download"/></svg>Download</button></div>
+    </section>
+  </div>
   <div class="toast" id="toast" role="status"></div>
 
   <script>
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
     const STORAGE_KEY = 'artzy-artworks-v1';
-    const state = { width: 1200, height: 800, pageColor: '#ffffff', paperCanvas: null, layers: [], folders: [], activeLayer: 0, activeFolderId: null, layersLoading: false, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, strength: .5, viewZoom: 1, viewPanX: 0, viewPanY: 0, viewRotation: 0, viewRotationTarget: 0, rotationFrame: 0, drawing: false, lastPoint: null, panStart: null, panElement: null, moveOrigin: null, folderMoveSnapshots: [], strokeCanvas: null, toolScratch: null, strokePoints: [], pencilTexture: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over' };
+    const state = { width: 1200, height: 800, pageColor: '#ffffff', paperCanvas: null, layers: [], folders: [], activeLayer: 0, activeFolderId: null, layersLoading: false, tool: 'brush', brush: 'pencil', color: '#277760', size: 18, opacity: .85, strength: .5, viewZoom: 1, viewPanX: 0, viewPanY: 0, viewRotation: 0, viewRotationTarget: 0, rotationFrame: 0, drawing: false, lastPoint: null, panStart: null, panElement: null, moveOrigin: null, folderMoveSnapshots: [], strokeCanvas: null, toolScratch: null, strokePoints: [], pencilTexture: null, history: [], historyIndex: -1, projectId: null, currentBlend: 'source-over', hasUnsavedChanges: false };
     let toastTimer;
 
     function icon(name) { return `<svg class="icon"><use href="#i-${name}"/></svg>`; }
@@ -603,6 +631,7 @@
       state.rotationFrame = 0; state.viewZoom = 1; state.viewPanX = 0; state.viewPanY = 0;
       state.viewRotation = 0; state.viewRotationTarget = 0;
       state.width = width; state.height = height; state.projectId = project?.id || null;
+      state.hasUnsavedChanges = false;
       state.pageColor = project?.pageColor || '#ffffff';
       state.folders = (project?.folders || []).map(folder => ({ id: folder.id, name: folder.name, visible: folder.visible !== false, opacity: folder.opacity ?? 1, position: Number(folder.position) || 0, collapsed: Boolean(folder.collapsed) }));
       state.layers = project?.layers?.length
@@ -1257,7 +1286,7 @@
         state.strokeCanvas.style.opacity = 0;
         state.strokePoints = [];
       }
-      state.drawing = false; state.lastPoint = null; state.moveOrigin = null; state.folderMoveSnapshots = []; saveHistory(); renderLayers();
+      state.drawing = false; state.lastPoint = null; state.moveOrigin = null; state.folderMoveSnapshots = []; state.hasUnsavedChanges = true; saveHistory(); renderLayers();
     }
     function moveLayerImage(point) {
       const offsetX = point.x - state.moveOrigin.x, offsetY = point.y - state.moveOrigin.y;
@@ -1365,7 +1394,7 @@
         }
       }
       target.context.putImageData(targetImage, 0, 0);
-      saveHistory(); renderLayers(); updateStatus('Area filled.');
+      state.hasUnsavedChanges = true; saveHistory(); renderLayers(); updateStatus('Area filled.');
     }
     function traceInkPath(ctx, points) {
       ctx.beginPath(); ctx.moveTo(points[0].x, points[0].y);
@@ -1535,31 +1564,50 @@
       projects.unshift(project);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(projects.slice(0, 12)));
-        state.projectId = project.id; showToast('Drawing saved on this device.'); updateStatus('All changes saved.');
+        state.projectId = project.id; state.hasUnsavedChanges = false; showToast('Drawing saved on this device.'); updateStatus('All changes saved.');
+        return true;
       } catch {
         showToast('Storage is full. Try a smaller page or fewer saved drawings.');
+        return false;
       }
     }
-    function compositeDataUrl() {
-      const preview = document.createElement('canvas'); preview.width = Math.min(state.width, 500); preview.height = Math.round(state.height * preview.width / state.width);
-      const ctx = preview.getContext('2d'); ctx.fillStyle = state.pageColor; ctx.fillRect(0, 0, preview.width, preview.height);
+    function compositeCanvas(width, height) {
+      const composite = document.createElement('canvas'); composite.width = width; composite.height = height;
+      const ctx = composite.getContext('2d'); ctx.fillStyle = state.pageColor; ctx.fillRect(0, 0, width, height);
       state.layers.forEach((layer, index) => {
         const folder = folderForLayer(layer);
         if (!layer.visible || (folder && !folder.visible)) return;
         let source = layer.canvas;
         const base = getClipBase(index);
         if (base) {
-          const clipped = document.createElement('canvas'); clipped.width = preview.width; clipped.height = preview.height;
+          const clipped = document.createElement('canvas'); clipped.width = width; clipped.height = height;
           const clippedContext = clipped.getContext('2d');
-          clippedContext.drawImage(layer.canvas, 0, 0, preview.width, preview.height);
+          clippedContext.drawImage(layer.canvas, 0, 0, width, height);
           clippedContext.globalCompositeOperation = 'destination-in';
-          clippedContext.drawImage(base.canvas, 0, 0, preview.width, preview.height);
+          clippedContext.drawImage(base.canvas, 0, 0, width, height);
           source = clipped;
         }
-        ctx.globalCompositeOperation = layer.blend; ctx.globalAlpha = layer.opacity * (folder?.opacity ?? 1);
-        ctx.drawImage(source, 0, 0, preview.width, preview.height);
+        ctx.save(); ctx.globalCompositeOperation = layer.blend; ctx.globalAlpha = layer.opacity * (folder?.opacity ?? 1);
+        ctx.drawImage(source, 0, 0, width, height); ctx.restore();
       });
-      ctx.globalCompositeOperation = 'source-over'; return preview.toDataURL('image/jpeg', .72);
+      return composite;
+    }
+    function compositeDataUrl() {
+      const width = Math.min(state.width, 500), height = Math.round(state.height * width / state.width);
+      return compositeCanvas(width, height).toDataURL('image/jpeg', .72);
+    }
+    function downloadArtwork(format) {
+      const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+      const extension = format === 'jpg' ? 'jpg' : 'png';
+      const name = ($('#documentName').value.trim() || 'Untitled drawing').replace(/[<>:"/\\|?*]/g, '-').replace(/[. ]+$/, '') || 'Untitled drawing';
+      compositeCanvas(state.width, state.height).toBlob(blob => {
+        if (!blob) { showToast('Could not create the download.'); return; }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a'); link.href = url; link.download = `${name}.${extension}`;
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast(`Downloaded ${extension.toUpperCase()} artwork.`);
+      }, mimeType, format === 'jpg' ? .92 : undefined);
     }
     function openProject(id) {
       const project = getProjects().find(item => item.id === id); if (!project) return;
@@ -1568,6 +1616,8 @@
 
     function openSizeModal() { $('#sizeModal').classList.remove('hidden'); }
     function closeSizeModal() { $('#sizeModal').classList.add('hidden'); }
+    function closeLeaveConfirm() { $('#leaveConfirmModal').classList.add('hidden'); }
+    function closeDownloadModal() { $('#downloadModal').classList.add('hidden'); }
     function selectedPreset(width, height) {
       $$('.preset').forEach(button => button.classList.toggle('active', Number(button.dataset.width) === width && Number(button.dataset.height) === height));
     }
@@ -1596,7 +1646,27 @@
       const dimensions = readDimensions(); if (!dimensions) return;
       closeSizeModal(); makeCanvas(dimensions.width, dimensions.height);
     });
-    $('#homeButton').addEventListener('click', () => setView('welcome'));
+    $('#homeButton').addEventListener('click', () => {
+      if (state.hasUnsavedChanges) $('#leaveConfirmModal').classList.remove('hidden');
+      else setView('welcome');
+    });
+    $('#closeLeaveConfirm').addEventListener('click', closeLeaveConfirm);
+    $('#keepEditing').addEventListener('click', closeLeaveConfirm);
+    $('#leaveConfirmModal').addEventListener('click', event => { if (event.target === $('#leaveConfirmModal')) closeLeaveConfirm(); });
+    $('#discardChanges').addEventListener('click', () => {
+      state.hasUnsavedChanges = false; closeLeaveConfirm(); setView('welcome');
+    });
+    $('#saveAndLeave').addEventListener('click', () => {
+      if (!saveProject()) return;
+      closeLeaveConfirm(); setView('welcome');
+    });
+    $('#downloadButton').addEventListener('click', () => $('#downloadModal').classList.remove('hidden'));
+    $('#closeDownload').addEventListener('click', closeDownloadModal);
+    $('#downloadModal').addEventListener('click', event => { if (event.target === $('#downloadModal')) closeDownloadModal(); });
+    $('#confirmDownload').addEventListener('click', () => {
+      const format = $('#downloadFormat').value;
+      closeDownloadModal(); downloadArtwork(format);
+    });
     $('#saveButton').addEventListener('click', saveProject);
     $('#undoButton').addEventListener('click', () => restoreHistory(-1));
     $('#redoButton').addEventListener('click', () => restoreHistory(1));
@@ -1661,7 +1731,7 @@
     window.addEventListener('keydown', event => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); restoreHistory(event.shiftKey ? 1 : -1); }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); saveProject(); }
-      if (event.key === 'Escape') { closeSizeModal(); closeThemePanel(); }
+      if (event.key === 'Escape') { closeSizeModal(); closeThemePanel(); closeLeaveConfirm(); closeDownloadModal(); }
     });
 
     try {
